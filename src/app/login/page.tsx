@@ -9,13 +9,11 @@ import { GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
 import { getAuth } from "@firebase/auth";
 
 const Login: NextPage = () => {
-  // State variables
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { login, user } = useAuth();
   const router = useRouter();
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -24,11 +22,9 @@ const Login: NextPage = () => {
       await router.push("/");
     } catch (error) {
       console.log(error);
-      // Handle specific error cases if needed
     }
   };
 
-  // Handle Google sign-in
   const handleGoogleSignIn = async () => {
     try {
       const googleProvider = new GoogleAuthProvider();
@@ -36,11 +32,9 @@ const Login: NextPage = () => {
       await router.push("/");
     } catch (error: any) {
       console.error("Google sign-in error:", error);
-      // Handle Google sign-in error if needed
     }
   };
 
-  // Redirect to the home page if the user is already authenticated
   useEffect(() => {
     if (user) {
       router.push("/");
