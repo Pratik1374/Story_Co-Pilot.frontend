@@ -15,7 +15,7 @@ export const Header = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
-    <header className="bg-gray-800 text-white p-4 border-b border-gray-700 w-screen">
+    <header className="top-0 absolute bg-gray-800 text-white p-4 border-b border-gray-700 w-screen h-[60px] flex items-center">
       <div className="w-full flex items-center justify-between">
         {/* Desktop View */}
         <div className="hidden md:flex items-center justify-between w-full">
@@ -23,7 +23,6 @@ export const Header = () => {
           <div className="flex gap-3 items-center">
             <button
               className="hover:text-white bg-gray-700 px-4 py-2 rounded-full"
-              // onClick={() => showDialog()}
               onClick={onOpen}
             >
               New Story
@@ -47,7 +46,7 @@ export const Header = () => {
           <div className="flex gap-3 items-center">
             <Popover>
               <PopoverTrigger>
-                <div className="flex flex-col gap-[3px]">
+                <div className="flex flex-col gap-[3px] p-2">
                   <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
                   <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
                   <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
