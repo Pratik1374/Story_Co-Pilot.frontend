@@ -10,49 +10,74 @@ import axios, { AxiosResponse } from "axios"; // Import axios
 import Spinner from "@/components/Spinner";
 
 interface APIResponse {
-  message: string;
-  data: any; // Or a more specific type if you know the structure of 'data'
-  // ... other properties
+  success: boolean;
+  data: any;
 }
 
 export default function Home() {
-  const { login, user } = useAuth();
+  const { login, user, getToken } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   // const [outputs, setOutputs] = useState<AxiosResponse[] | []>([]);
   const [outputs, setOutputs] = useState<string[] | []>([]);
   const [error, setError] = useState(null);
+  const [selectedLengthTab, setSelectedLengthTab] = useState<string>("Medium");
+  const [creativityValue, setCreativityValue] = useState<number | number[]>(
+    0.2
+  );
+  const [userPrompt, setUserPrompt] = useState<string>("");
+  const [isPromptEmpty, setIsPromptEmpty] = useState<boolean>(false);
 
   useEffect(() => {
     console.log("user -> ", user);
-    console.log("o - ", outputs);
-  });
+  }, [user]);
 
-  // Modified handleSubmit function
   const handleSubmit = async () => {
+    if (userPrompt === "") {
+      setIsPromptEmpty(true);
+      return;
+    }
     setIsLoading(true);
     setError(null);
 
     try {
-      // ... gather data for API call
+      let lengthSetting = "Medium";
+      if (selectedLengthTab === "tab_small_length") {
+        lengthSetting = "Small";
+      } else if (selectedLengthTab === "tab_medium_length") {
+        lengthSetting = "Medium";
+      } else if (selectedLengthTab === "tab_large_length") {
+        lengthSetting = "Large";
+      }
 
-      // const response = await axios.post("/api/generate-text", {
-      //   prompt,
-      //   // ... other settings
-      // });
+      const prompt = `You will be given a user-provided description. Respond creatively using the following settings:
+      * Output Length: ${lengthSetting}
+      * Creativity: ${creativityValue} (Ranged from 0 to 1)
 
-      const response = {
-        message: "success",
-        data: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta quas iste natus tenetur. Quibusdam at labore, veritatis eveniet, quaerat ratione repellat nemo placeat corporis dolorum facilis, eaque impedit reiciendis sequi!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta quas iste natus tenetur. Quibusdam at labore, veritatis eveniet, quaerat ratione repellat nemo placeat corporis dolorum facilis, eaque impedit reiciendis sequi!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta quas iste natus tenetur. Quibusdam at labore, veritatis eveniet, quaerat ratione repellat nemo placeat corporis dolorum facilis, eaque impedit reiciendis sequi!",
-      };
+      User Description: ${userPrompt}`;
 
-      setOutputs([response.data, ...outputs]);
-      // Add new output to the top of the array
+      const token = await getToken();
+      console.log("token -", token);
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/response/response-for-text`,
+        {
+          prompt,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(response);
+
+      setOutputs([response?.data?.data, ...outputs]);
+      setUserPrompt("");
     } catch (err) {
       // setError("An error occurred during the API call.");
     } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 3000);
+      setIsLoading(false);
     }
   };
 
@@ -69,10 +94,20 @@ export default function Home() {
               <p className="font-sans">Prompt</p>
               <Textarea
                 key="prompt_textarea"
+                id="prompt_textarea"
                 variant="bordered"
+                value={userPrompt}
                 labelPlacement="outside"
                 placeholder="Enter your description"
                 className="col-span-12 md:col-span-6 mb-6 md:mb-0"
+                onValueChange={(value) => {
+                  setUserPrompt(value);
+                  setIsPromptEmpty(false);
+                }}
+                aria-label="user-prompt"
+                isInvalid={isPromptEmpty}
+                errorMessage={isPromptEmpty ? "Please enter a prompt" : ""}
+                isRequired={true}
               />
             </div>
 
@@ -80,10 +115,12 @@ export default function Home() {
               <p className="font-sans">Output Length</p>
               <Tabs
                 key="output_length_tabs"
+                id="output_length_tabs"
                 color="secondary"
                 aria-label="Output Length"
                 radius="full"
                 defaultSelectedKey="tab_medium_length"
+                onSelectionChange={(key) => setSelectedLengthTab(key as string)}
               >
                 <Tab key="tab_small_length" title="Small" />
                 <Tab key="tab_medium_length" title="Medium" />
@@ -116,6 +153,8 @@ export default function Home() {
                 ]}
                 defaultValue={0.2}
                 className="max-w-md mt-3"
+                onChange={(value) => setCreativityValue(value)}
+                aria-label="creativity-slider"
               />
             </div>
 
@@ -134,12 +173,12 @@ export default function Home() {
             <p>Results</p>
             {isLoading && (
               <div className="flex items-center justify-center w-full bg-gray-800 mt-3 p-2 h-[200px]">
-                <Spinner/>
+                <Spinner />
               </div>
             )}
 
             {/* Display outputs in reverse order */}
-            {outputs.length === 0 && (
+            {!isLoading && outputs.length === 0 && (
               <div className="w-full h-[60px] text-center p-2">
                 <p className="text-sm">No any results yet</p>
               </div>
@@ -147,13 +186,17 @@ export default function Home() {
 
             {outputs.map((output, index) => (
               <div
-                className="w-full bg-gray-800 mt-4 p-2  overflow-auto scrollbar-thin scrollbar-thumb-gray-300 rounded-md shadow-md shadow-gray-600"
+                className="w-full bg-gray-800 mt-4 p-2  overflow-auto scrollbar-thin scrollbar-thumb-gray-300 rounded-md shadow-md shadow-gray-600 whitespace-pre-wrap"
                 key={`AI_Text_Output_${index}`}
               >
                 {output}
                 <div className="flex w-full gap-2 justify-end  mt-3">
-                <button className="bg-violet-400 p-2 hover:bg-violet-500 rounded-lg text-sm text-black">Replace selected text</button>
-                <button className="bg-violet-400 p-2 hover:bg-violet-500 rounded-lg text-sm text-black">Move to editor</button>
+                  <button className="bg-violet-400 p-2 hover:bg-violet-500 rounded-lg text-sm text-black">
+                    Replace selected text
+                  </button>
+                  <button className="bg-violet-400 p-2 hover:bg-violet-500 rounded-lg text-sm text-black">
+                    Move to editor
+                  </button>
                 </div>
               </div>
             ))}
