@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
 import { getAuth } from "@firebase/auth";
+import axios from "axios";
 
 const Register: NextPage = () => {
   // State variables
@@ -13,10 +14,27 @@ const Register: NextPage = () => {
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [name, setName] = useState<string>("");
 
   // Auth context and router
   const { register, user } = useAuth();
   const router = useRouter();
+
+  //add new user to database
+  const addNewUser = async (email: string, name: string, uid: string) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/signup`,
+        {
+          email,
+          name,
+          uid,
+        }
+      );
+    } catch (error) {
+      console.error("Error while adding user data")
+    }
+  };
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,7 +43,12 @@ const Register: NextPage = () => {
     setError(null);
 
     try {
-      await register(email, password);
+      const userCredential = await register(email, password);
+      const uid = userCredential.user?.uid || "";
+      if (uid === "") {
+        alert("Failed to register");
+      }
+      await addNewUser(email, name, uid);
       await router.push("/");
     } catch (error: any) {
       // Handle registration errors
@@ -48,7 +71,16 @@ const Register: NextPage = () => {
 
     try {
       const googleProvider = new GoogleAuthProvider();
-      await signInWithPopup(getAuth(), googleProvider);
+      const result = await signInWithPopup(getAuth(), googleProvider);
+      const googleUser = result.user;
+      const googleName = googleUser.displayName || "";
+      const googleEmail = googleUser.email || "";
+      setName(googleName);
+      const uid = googleUser?.uid || "";
+      if (uid === "") {
+        alert("Failed to register");
+      }
+      await addNewUser(googleEmail, googleName, uid);
       await router.push("/");
     } catch (error: any) {
       setError("An error occurred during Google sign-in. Please try again.");
@@ -74,6 +106,17 @@ const Register: NextPage = () => {
             className="w-3/4 max-w-md mt-4 mx-auto text-black"
             onSubmit={handleSubmit}
           >
+            <div className="mb-4">
+              <label htmlFor="name" />
+              <input
+                className="w-full p-2 border-2 border-gray-900"
+                name="name"
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
             <div className="mb-4">
               <label htmlFor="email" />
               <input

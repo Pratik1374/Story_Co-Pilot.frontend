@@ -26,7 +26,7 @@ import {
     login: (email: string, password: string) => Promise<UserCredential>;
     logout: () => Promise<void>;
     register: (email: string, password: string) => Promise<UserCredential>;
-    getToken: () => Promise<string | null>;
+    getLatestToken: () => Promise<string | null>;
   }>({
     user: null,
     loading: true,
@@ -35,7 +35,7 @@ import {
     logout: () => Promise.resolve(),
     register: (email, password) =>
       createUserWithEmailAndPassword(auth, email, password),
-    getToken: async () => null,
+      getLatestToken: async () => null,
   });
   
   export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -64,9 +64,8 @@ import {
       return () => unsubscribe();
     }, []);
   
-    const getToken = async () => {
+    const getLatestToken = async () => {
       if (auth.currentUser) {
-        console.log('called')
         const tokenResult = await auth.currentUser.getIdTokenResult();
         return tokenResult?.token || null;
       }
@@ -99,7 +98,7 @@ import {
     };
   
     return (
-      <AuthContext.Provider value={{ loading, user, login, logout, register, getToken }}>
+      <AuthContext.Provider value={{ loading, user, login, logout, register, getLatestToken }}>
         {loading ? null : children}
       </AuthContext.Provider>
     );

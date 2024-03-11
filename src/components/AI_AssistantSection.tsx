@@ -27,7 +27,7 @@ const AI_AssistantSection = () => {
   );
   const [userPrompt, setUserPrompt] = useState<string>("");
   const [isPromptEmpty, setIsPromptEmpty] = useState<boolean>(false);
-  const { login, user, getToken } = useAuth();
+  const { login, user, getLatestToken } = useAuth();
 
   const handleSubmit = async () => {
     if (userPrompt === "") {
@@ -53,7 +53,7 @@ const AI_AssistantSection = () => {
     
           User Description: ${userPrompt}`;
 
-      const token = await getToken();
+      const token = await getLatestToken();
       console.log("token -", token);
 
       const response = await axios.post(
