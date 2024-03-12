@@ -1,7 +1,7 @@
 "use client";
 
 import AI_AssistantSection from "@/components/AI_AssistantSection";
-import { Header } from "@/components/Header";
+import  Header  from "@/components/Header";
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import React from "react";

@@ -7,23 +7,28 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
 } from "@nextui-org/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { FC, useState } from "react";
 
-export const Header = () => {
+interface HeaderProps {
+  setIsAssistantDrawerOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Header: FC<HeaderProps> = ({ setIsAssistantDrawerOpen }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const router = useRouter();
   const [storyName, setStoryName] = useState("");
   const { user, getLatestToken, logout } = useAuth();
 
   const handleSave = async () => {
-    if(storyName === "") {
-      alert("Please enter story name")
+    if (storyName === "") {
+      alert("Please enter story name");
       return;
     }
     const token = await getLatestToken();
@@ -77,7 +82,10 @@ export const Header = () => {
             <button className="hover:text-white bg-gray-700 px-4 py-2 rounded-full">
               Generate Images
             </button>
-            <div className="rounded-full w-8 h-8 overflow-hidden flex items-center justify-center" onClick={() => handleLogOut()}>
+            <div
+              className="rounded-full w-8 h-8 overflow-hidden flex items-center justify-center"
+              onClick={() => handleLogOut()}
+            >
               <img
                 src="https://www.gravatar.com/avatar/?d=mp"
                 alt="Profile Image"
@@ -91,31 +99,42 @@ export const Header = () => {
         <div className="md:hidden flex items-center justify-between w-screen">
           <h1 className="text-xl font-bold text-purple-700">Story_Co-Pilot</h1>
           <div className="flex gap-3 items-center">
-            <Popover>
-              <PopoverTrigger>
+            <Dropdown>
+              <DropdownTrigger>
                 <div className="flex flex-col gap-[3px] p-2">
                   <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
                   <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
                   <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
                 </div>
-              </PopoverTrigger>
-              <PopoverContent>
-                <div className="flex flex-col gap-2 w-[200px] items-center justify-center py-4 bg-gray-900 rounded-md">
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem key="new_story_dropdown">
                   <button
-                    className="w-[90%] bg-gray-700 py-1 px-3 rounded-full"
+                    className="w-full bg-gray-700 py-1 px-3 rounded-full"
                     onClick={onOpen}
                   >
                     New Story
                   </button>
-                  <button className="w-[90%] bg-gray-700 py-1 px-3 rounded-full">
+                </DropdownItem>
+                <DropdownItem key="ai_assistant_dropdown">
+                  <button
+                    className="w-full bg-gray-700 py-1 px-3 rounded-full"
+                    onClick={() => {
+                      if (setIsAssistantDrawerOpen) {
+                        setIsAssistantDrawerOpen(true);
+                      }
+                    }}
+                  >
                     AI Assistant
                   </button>
-                  <button className="w-[90%] bg-gray-700 py-1 px-3 rounded-full">
+                </DropdownItem>
+                <DropdownItem key="generate_images_dropdown">
+                  <button className="w-full bg-gray-700 py-1 px-3 rounded-full">
                     Generate Images
                   </button>
-                </div>
-              </PopoverContent>
-            </Popover>
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
             <div
               className="rounded-full w-8 h-8 overflow-hidden"
               onClick={() => handleLogOut()}
@@ -173,3 +192,5 @@ export const Header = () => {
     </header>
   );
 };
+
+export default Header;

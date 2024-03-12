@@ -1,7 +1,8 @@
 "use client";
 
+import AI_AssistantDrawer from "@/components/AI_AssistantDrawer";
 import AI_AssistantSection from "@/components/AI_AssistantSection";
-import { Header } from "@/components/Header";
+import Header from "@/components/Header";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -17,6 +18,7 @@ export default function StoryMainPage({
   const story_id = params.story_id;
   const router = useRouter();
   const [isValidating, setIsValidating] = useState(false);
+  const [isAssistantDrawerOpen, setIsAssistantDrawerOpen] = useState(false);
 
   useEffect(() => {
     const validateStoryId = async () => {
@@ -34,33 +36,41 @@ export default function StoryMainPage({
             },
           }
         );
-        setIsValidating(false)
+        setIsValidating(false);
       } catch (error) {
         console.error("Error validating story");
         router.push("/");
       } finally {
-        setIsValidating(false)
+        setIsValidating(false);
       }
     };
 
-    validateStoryId();
+    // validateStoryId();
   }, [params.story_id]);
 
-  if(isValidating) {
+  if (isValidating) {
     return <></>;
   }
 
   return (
     <main className="flex flex-col min-h-screen w-screen">
-      <Header />
+      <Header setIsAssistantDrawerOpen={setIsAssistantDrawerOpen} />
       <div className="flex h-screen w-screen bg-gray-600 overflow-auto pt-[60px] scrollbar-thin scrollbar-thumb-gray-500">
         {/* AI prompting section */}
-        <div className="bg-black h-full w-[35%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500">
+        <div className="hidden md:flex flex-col bg-black h-full w-[35%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500">
           <AI_AssistantSection />
         </div>
 
         {/* editor section */}
-        <div className="bg-gray-400 h-full w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500"></div>
+        <div className="bg-gray-400 h-full w-screen lg:w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500"></div>
+
+        {/* AI Assistant section drawer in mobile view */}
+        <AI_AssistantDrawer
+          isOpen={isAssistantDrawerOpen}
+          setIsOpen={setIsAssistantDrawerOpen}
+        >
+          <AI_AssistantSection />
+        </AI_AssistantDrawer>
       </div>
     </main>
   );
