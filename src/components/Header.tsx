@@ -22,7 +22,10 @@ export const Header = () => {
   const { user, getLatestToken, logout } = useAuth();
 
   const handleSave = async () => {
-    console.log("in handleSave");
+    if(storyName === "") {
+      alert("Please enter story name")
+      return;
+    }
     const token = await getLatestToken();
     try {
       const response = await axios.post(

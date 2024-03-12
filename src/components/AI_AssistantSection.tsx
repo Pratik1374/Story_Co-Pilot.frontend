@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   AvatarIcon,
@@ -10,15 +10,17 @@ import {
 import Spinner from "@/components/Spinner";
 import axios, { AxiosResponse } from "axios";
 import { useAuth } from "@/context/AuthContext";
+import { usePathname } from "next/navigation";
 
 interface PromptAndOutput {
+  id: string;
   prompt: string;
   answer: string;
 }
 
 const AI_AssistantSection = () => {
   const [isLoading, setIsLoading] = useState(false);
-  // const [outputs, setOutputs] = useState<AxiosResponse[] | []>([]);
+  const [historyLoader, setHistoryLoader] = useState(false);
   const [outputs, setOutputs] = useState<[PromptAndOutput] | []>([]);
   const [error, setError] = useState(null);
   const [selectedLengthTab, setSelectedLengthTab] = useState<string>("Medium");
@@ -28,6 +30,38 @@ const AI_AssistantSection = () => {
   const [userPrompt, setUserPrompt] = useState<string>("");
   const [isPromptEmpty, setIsPromptEmpty] = useState<boolean>(false);
   const { login, user, getLatestToken } = useAuth();
+  const pathname = usePathname();
+  const segments = pathname.split("/");
+  const story_id = segments.length > 2 ? segments[2] : null;
+
+  useEffect(() => {
+    setHistoryLoader(true);
+    const getPreviousAIConversation = async () => {
+      try {
+        const token = await getLatestToken();
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/story/get-ai-conversations`,
+          {
+            story_id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setOutputs(response.data.conversations);
+        // setHistoryLoader(false);
+      } catch (error) {
+        console.error("Error getting previous responses");
+      } finally {
+        setHistoryLoader(false);
+      }
+    };
+
+    getPreviousAIConversation();
+  },[story_id]);
 
   const handleSubmit = async () => {
     if (userPrompt === "") {
@@ -47,19 +81,16 @@ const AI_AssistantSection = () => {
         lengthSetting = "Large";
       }
 
-      const prompt = `You will be given a user-provided description. Respond creatively using the following settings:
-          * Output Length: ${lengthSetting}
-          * Creativity: ${creativityValue} (Ranged from 0 to 1)
-    
-          User Description: ${userPrompt}`;
-
       const token = await getLatestToken();
-      console.log("token -", token);
+      console.log(token);
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/v1/response/response-for-text`,
         {
-          prompt,
+          user_prompt: userPrompt,
+          story_id,
+          length_setting: lengthSetting,
+          creativity_value: creativityValue,
         },
         {
           headers: {
@@ -177,8 +208,15 @@ const AI_AssistantSection = () => {
           </div>
         )}
 
+        {historyLoader && outputs.length === 0 && (
+          <div className="flex items-center justify-center flex-col w-full  mt-3 p-2 h-[200px]">
+            <p className="text-sm mb-1">Loading history...</p>
+            <Spinner />
+          </div>
+        )}
+
         {/* Display outputs in reverse order */}
-        {!isLoading && outputs.length === 0 && (
+        {!historyLoader && !isLoading && outputs.length === 0 && (
           <div className="w-full h-[60px] text-center p-2">
             <p className="text-sm">No any results yet</p>
           </div>
@@ -200,7 +238,9 @@ const AI_AssistantSection = () => {
                   size="sm"
                 />
               </div>
-              <p className="flex font-semibold font-mono shadow-sm shadow-gray-600 p-1">{output.prompt}</p>
+              <p className="flex font-semibold font-mono p-1">
+                {output.prompt}
+              </p>
             </div>
             <div className="w-full flex items-start gap-1 mt-2">
               <div className="flex">
@@ -210,7 +250,7 @@ const AI_AssistantSection = () => {
                   size="sm"
                 />
               </div>
-              <div className="flex p-1 shadow-sm shadow-gray-600">{output.answer}</div>
+              <div className="flex p-1">{output.answer}</div>
             </div>
             <div className="flex w-full gap-2 justify-end  mt-3">
               <button className="bg-purple-400 p-2 hover:bg-purple-500 rounded-lg text-sm text-black">
