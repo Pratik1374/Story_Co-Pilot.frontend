@@ -39,18 +39,15 @@ const AI_AssistantSection = () => {
     const getPreviousAIConversation = async () => {
       try {
         const token = await getLatestToken();
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/story/get-ai-conversations`,
-          {
-            story_id,
-          },
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/story/get-ai-conversations/${story_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-
+        
         setOutputs(response.data.conversations);
         // setHistoryLoader(false);
       } catch (error) {

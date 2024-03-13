@@ -17,10 +17,10 @@ import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 
 interface HeaderProps {
-  setIsAssistantDrawerOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  set_is_assistant_drawer_open?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header: FC<HeaderProps> = ({ setIsAssistantDrawerOpen }) => {
+const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const router = useRouter();
   const [storyName, setStoryName] = useState("");
@@ -120,8 +120,8 @@ const Header: FC<HeaderProps> = ({ setIsAssistantDrawerOpen }) => {
                   <button
                     className="w-full bg-gray-700 py-1 px-3 rounded-full"
                     onClick={() => {
-                      if (setIsAssistantDrawerOpen) {
-                        setIsAssistantDrawerOpen(true);
+                      if (set_is_assistant_drawer_open) {
+                        set_is_assistant_drawer_open(true);
                       }
                     }}
                   >

@@ -45,7 +45,7 @@ export default function StoryMainPage({
       }
     };
 
-    // validateStoryId();
+    validateStoryId();
   }, [params.story_id]);
 
   if (isValidating) {
@@ -54,7 +54,7 @@ export default function StoryMainPage({
 
   return (
     <main className="flex flex-col min-h-screen w-screen">
-      <Header setIsAssistantDrawerOpen={setIsAssistantDrawerOpen} />
+      <Header set_is_assistant_drawer_open={setIsAssistantDrawerOpen} />
       <div className="flex h-screen w-screen bg-gray-600 overflow-auto pt-[60px] scrollbar-thin scrollbar-thumb-gray-500">
         {/* AI prompting section */}
         <div className="hidden md:flex flex-col bg-black h-full w-[35%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500">
@@ -66,8 +66,8 @@ export default function StoryMainPage({
 
         {/* AI Assistant section drawer in mobile view */}
         <AI_AssistantDrawer
-          isOpen={isAssistantDrawerOpen}
-          setIsOpen={setIsAssistantDrawerOpen}
+          is_open={isAssistantDrawerOpen}
+          set_is_open={setIsAssistantDrawerOpen}
         >
           <AI_AssistantSection />
         </AI_AssistantDrawer>
