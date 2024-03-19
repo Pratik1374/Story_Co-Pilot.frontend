@@ -15,6 +15,7 @@ import {
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
+import UserDropdown from "./UserDropdown";
 
 interface HeaderProps {
   set_is_assistant_drawer_open?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -50,20 +51,13 @@ const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
         const storyId = response.data.story_id;
         console.log(storyId);
 
-        // Redirect to the story page with the obtained story_id
         router.push(`/story/${storyId}`);
       } else {
-        // Handle error case
         console.error("Error making API call");
       }
     } catch (error) {
       console.error("Error:", error);
     }
-  };
-
-  const handleLogOut = async () => {
-    await logout();
-    alert("logged out");
   };
 
   return (
@@ -82,16 +76,7 @@ const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
             <button className="hover:text-white bg-gray-700 px-4 py-2 rounded-full">
               Generate Images
             </button>
-            <div
-              className="rounded-full w-8 h-8 overflow-hidden flex items-center justify-center"
-              onClick={() => handleLogOut()}
-            >
-              <img
-                src="https://www.gravatar.com/avatar/?d=mp"
-                alt="Profile Image"
-                className="object-cover"
-              />
-            </div>
+            <UserDropdown />
           </div>
         </div>
 
@@ -110,7 +95,7 @@ const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
               <DropdownMenu aria-label="Static Actions">
                 <DropdownItem key="new_story_dropdown">
                   <button
-                    className="w-full bg-gray-700 py-1 px-3 rounded-full"
+                    className="w-full bg-gray-700 py-1 px-3 rounded-md"
                     onClick={onOpen}
                   >
                     New Story
@@ -118,7 +103,7 @@ const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
                 </DropdownItem>
                 <DropdownItem key="ai_assistant_dropdown">
                   <button
-                    className="w-full bg-gray-700 py-1 px-3 rounded-full"
+                    className="w-full bg-gray-700 py-1 px-3 rounded-md"
                     onClick={() => {
                       if (set_is_assistant_drawer_open) {
                         set_is_assistant_drawer_open(true);
@@ -129,22 +114,13 @@ const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
                   </button>
                 </DropdownItem>
                 <DropdownItem key="generate_images_dropdown">
-                  <button className="w-full bg-gray-700 py-1 px-3 rounded-full">
+                  <button className="w-full bg-gray-700 py-1 px-3 rounded-md">
                     Generate Images
                   </button>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <div
-              className="rounded-full w-8 h-8 overflow-hidden"
-              onClick={() => handleLogOut()}
-            >
-              <img
-                src="https://www.gravatar.com/avatar/?d=mp"
-                alt="Profile Image"
-                className="object-cover"
-              />
-            </div>
+            <UserDropdown />
           </div>
         </div>
       </div>
