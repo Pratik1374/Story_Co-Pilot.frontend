@@ -3,6 +3,7 @@
 import AI_AssistantDrawer from "@/components/AI_AssistantDrawer";
 import AI_AssistantSection from "@/components/AI_AssistantSection";
 import Header from "@/components/Header";
+import TiptapTextEditor from "@/components/TiptapTextEditor";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -19,6 +20,10 @@ export default function StoryMainPage({
   const router = useRouter();
   const [isValidating, setIsValidating] = useState(false);
   const [isAssistantDrawerOpen, setIsAssistantDrawerOpen] = useState(false);
+  const [content, setContent] = useState<string>('')
+  const handleContentChange = (reason: any) => {
+    setContent(reason)
+  }
 
   useEffect(() => {
     const validateStoryId = async () => {
@@ -62,7 +67,12 @@ export default function StoryMainPage({
         </div>
 
         {/* editor section */}
-        <div className="bg-gray-400 h-full w-screen lg:w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500"></div>
+        <div className="h-full w-screen lg:w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500 text-black p-2 ">
+        <TiptapTextEditor
+        content={content}
+        onChange={(newContent: string) => handleContentChange(newContent)}
+      />
+        </div>
 
         {/* AI Assistant section drawer in mobile view */}
         <AI_AssistantDrawer

@@ -10,9 +10,14 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.10",
+    "@tiptap/extension-underline": "^2.2.4",
+    "@tiptap/pm": "^2.2.4",
+    "@tiptap/react": "^2.2.4",
+    "@tiptap/starter-kit": "^2.2.4",
     "axios": "^1.6.7",
     "firebase": "^10.8.1",
     "framer-motion": "^11.0.8",
+    "lucide-react": "^0.360.0",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18"
