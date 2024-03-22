@@ -80,3 +80,17 @@ body {
 .scrollbar-thumb-gray-500::-webkit-scrollbar-thumb {
   background-color: #6a6b6c;
 }
+
+.ProseMirror {
+  caret-color: rgb(148, 153, 142);
+}
+
+.ProseMirror p {
+  margin: 0;
+  min-width: 1px;
+}
+
+.my-bg-gradient {
+  background-color: #000000;
+  background-image: linear-gradient(315deg, #000000 0%, #1f1c3e 74%);
+}

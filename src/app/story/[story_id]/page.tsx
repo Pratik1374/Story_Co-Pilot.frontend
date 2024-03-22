@@ -20,10 +20,10 @@ export default function StoryMainPage({
   const router = useRouter();
   const [isValidating, setIsValidating] = useState(false);
   const [isAssistantDrawerOpen, setIsAssistantDrawerOpen] = useState(false);
-  const [content, setContent] = useState<string>('')
+  const [content, setContent] = useState<string>("");
   const handleContentChange = (reason: any) => {
-    setContent(reason)
-  }
+    setContent(reason);
+  };
 
   useEffect(() => {
     const validateStoryId = async () => {
@@ -67,11 +67,15 @@ export default function StoryMainPage({
         </div>
 
         {/* editor section */}
-        <div className="h-full w-screen lg:w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500 text-black p-2 ">
-        <TiptapTextEditor
-        content={content}
-        onChange={(newContent: string) => handleContentChange(newContent)}
-      />
+        <div className="h-full w-screen lg:w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500  p-2 my-bg-gradient">
+          <p className="text-center font-bold text-xl font-serif mb-4">
+            Editor
+          </p>
+          
+          <TiptapTextEditor
+            content={content}
+            onChange={(newContent: string) => handleContentChange(newContent)}
+          />
         </div>
 
         {/* AI Assistant section drawer in mobile view */}
