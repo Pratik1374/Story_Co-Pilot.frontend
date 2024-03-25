@@ -1,5 +1,7 @@
 import { useAuth } from "@/context/AuthContext";
 import {
+  Avatar,
+  AvatarIcon,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -23,10 +25,13 @@ const UserDropdown = () => {
     <Dropdown>
       <DropdownTrigger>
         <div className="rounded-full w-8 h-8 overflow-hidden cursor-pointer">
-          <img
-            src="https://www.gravatar.com/avatar/?d=mp"
-            alt="Profile Image"
-            className="object-cover "
+          <Avatar
+            icon={<AvatarIcon />}
+            classNames={{
+              base: "bg-gradient-to-br from-[#ad04bf] to-[#cc93f5]",
+              icon: "text-black/80",
+            }}
+            size="sm"
           />
         </div>
       </DropdownTrigger>

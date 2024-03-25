@@ -32,7 +32,7 @@ const Register: NextPage = () => {
         }
       );
     } catch (error) {
-      console.error("Error while adding user data")
+      console.error("Error while adding user data");
     }
   };
 
@@ -101,6 +101,11 @@ const Register: NextPage = () => {
     <div>
       <main className="p-4">
         <div className="container mx-auto">
+          
+            <h1 className="font-bold text-5xl text-center mb-6 font-serif text-purple-500">
+              Story_Co-Pilot
+            </h1>
+          
           <h1 className="text-2xl text-center">Register Your Account</h1>
           <form
             className="w-3/4 max-w-md mt-4 mx-auto text-black"

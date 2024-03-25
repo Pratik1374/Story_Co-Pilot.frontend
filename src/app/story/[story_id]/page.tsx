@@ -67,11 +67,11 @@ export default function StoryMainPage({
         </div>
 
         {/* editor section */}
-        <div className="h-full w-screen lg:w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500  p-2 my-bg-gradient">
-          <p className="text-center font-bold text-xl font-serif mb-4">
+        <div className="h-full w-screen lg:w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500  p-2 my-bg-gradient text-black">
+          <p className="text-center font-bold text-xl font-serif mb-4 text-white">
             Editor
           </p>
-          
+
           <TiptapTextEditor
             content={content}
             onChange={(newContent: string) => handleContentChange(newContent)}

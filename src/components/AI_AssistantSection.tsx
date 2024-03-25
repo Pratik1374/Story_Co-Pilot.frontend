@@ -47,7 +47,7 @@ const AI_AssistantSection = () => {
             },
           }
         );
-        
+
         setOutputs(response.data.conversations);
         // setHistoryLoader(false);
       } catch (error) {
@@ -58,9 +58,10 @@ const AI_AssistantSection = () => {
     };
 
     getPreviousAIConversation();
-  },[story_id]);
+  }, [story_id]);
 
   const handleSubmit = async () => {
+    console.log("hitted")
     if (userPrompt === "") {
       setIsPromptEmpty(true);
       return;
@@ -116,7 +117,9 @@ const AI_AssistantSection = () => {
   return (
     <>
       <div className="flex flex-col w-full p-2">
-        <h1 className="text-center font-bold text-xl font-serif">Your AI Assistant</h1>
+        <h1 className="text-center font-bold text-xl font-serif">
+          Your AI Assistant
+        </h1>
 
         <div className="flex flex-col gap-1 mt-3">
           <p className="font-sans">Prompt</p>
@@ -187,7 +190,10 @@ const AI_AssistantSection = () => {
         </div>
 
         <button
-          className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-400 group-hover:from-purple-500 group-hover:to-purple-500-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 mt-5"
+          className={`relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-400 group-hover:from-purple-500 group-hover:to-purple-500-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 mt-5 ${
+            isLoading ? "cursor-not-allowed " : ""
+          }`}
+          disabled={isLoading}
           onClick={handleSubmit}
         >
           <p className="flex w-full justify-center items-center px-5 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 group-hover:text-black text-center font-sans font-semibold">
