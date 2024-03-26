@@ -10,6 +10,11 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.10",
+    "@tiptap/extension-blockquote": "^2.2.4",
+    "@tiptap/extension-bullet-list": "^2.2.4",
+    "@tiptap/extension-list-item": "^2.2.4",
+    "@tiptap/extension-ordered-list": "^2.2.4",
+    "@tiptap/extension-text": "^2.2.4",
     "@tiptap/extension-underline": "^2.2.4",
     "@tiptap/pm": "^2.2.4",
     "@tiptap/react": "^2.2.4",
@@ -19,6 +24,7 @@
     "framer-motion": "^11.0.8",
     "lucide-react": "^0.360.0",
     "next": "14.1.0",
+    "postcss-nested": "^6.0.1",
     "react": "^18",
     "react-dom": "^18"
   },

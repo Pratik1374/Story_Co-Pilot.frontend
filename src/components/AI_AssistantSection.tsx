@@ -61,7 +61,6 @@ const AI_AssistantSection = () => {
   }, [story_id]);
 
   const handleSubmit = async () => {
-    console.log("hitted")
     if (userPrompt === "") {
       setIsPromptEmpty(true);
       return;

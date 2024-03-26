@@ -11,12 +11,13 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  divider,
 } from "@nextui-org/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import UserDropdown from "./UserDropdown";
-import { galada  } from '../utils/fonts';
+import { lobster, acme } from "../utils/fonts";
 import Link from "next/link";
 
 interface HeaderProps {
@@ -66,19 +67,56 @@ const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
     <header className="top-0 absolute bg-gray-950 text-white p-4 border-b border-gray-700 w-screen h-[60px] flex items-center">
       <div className="w-full flex items-center justify-between">
         {/* Desktop View */}
+
         <div className="hidden md:flex items-center justify-between w-full">
-          <Link href="/" className= {`${galada.className} story-pilot-link text-3xl font-bold cursor-pointer`}>Story_Co-Pilot</Link>
+          <Link
+            href="/"
+            className={`${lobster.className} story-pilot-link text-3xl font-bold cursor-pointer`}
+          >
+            Story_Co-Pilot
+          </Link>
           <div className="flex gap-3 items-center">
-            <button
-              className="hover:text-white bg-gray-700 px-4 py-2 rounded-full"
-              onClick={onOpen}
-            >
-              New Story
-            </button>
-            <button className="hover:text-white bg-gray-700 px-4 py-2 rounded-full">
-              Generate Images
-            </button>
-            <UserDropdown />
+            {user ? (
+              <>
+                <button
+                  className={`${acme.className} hover:bg-gray-700 bg-gray-800 px-4 py-2 rounded-full`}
+                  onClick={onOpen}
+                >
+                  New Story
+                </button>
+                <button
+                  className={`${acme.className} hover:bg-gray-700 bg-gray-800 px-4 py-2 rounded-full`}
+                >
+                  Generate Images
+                </button>
+
+                <UserDropdown />
+              </>
+            ) : (
+              <>
+                <button
+                  className="shooting-star-border"
+                  onClick={() => router.push("/login")}
+                >
+                  <span className="spark__container">
+                    <span className="spark" />
+                  </span>
+                  <span className="backdrop" />
+                  <span className="text">Login</span>
+                </button>
+
+                <button
+                  className="shooting-star-border"
+                  onClick={() => router.push("/register")}
+                >
+                  <span className="spark__container">
+                    <span className="spark" />
+                  </span>
+                  <span className="backdrop" />
+                  <span className="text">Register</span>
+                </button>
+              </>
+            )}
           </div>
         </div>
 
