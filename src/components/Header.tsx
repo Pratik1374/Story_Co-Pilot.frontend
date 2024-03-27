@@ -29,6 +29,7 @@ const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
   const router = useRouter();
   const [storyName, setStoryName] = useState("");
   const { user, getLatestToken, logout } = useAuth();
+  const [creatingNewStory,setCreatingNewStory] = useState(false);
 
   const handleSave = async () => {
     if (storyName === "") {

@@ -8,9 +8,6 @@ import BulletList from "@tiptap/extension-bullet-list";
 import OrderedList from "@tiptap/extension-ordered-list";
 import Blockquote from "@tiptap/extension-blockquote";
 
-BulletList.configure({
-  keepAttributes: true,
-})
 
 const TiptapTextEditor = ({ onChange, content }: any) => {
   const handleChange = (newContent: string) => {
@@ -18,12 +15,6 @@ const TiptapTextEditor = ({ onChange, content }: any) => {
   };
   const editor = useEditor({
     extensions: [StarterKit, Underline, BulletList, OrderedList, Blockquote],
-    content: `
-    <ul>
-      <li>A list item</li>
-      <li>And another one</li>
-    </ul>
-  `,
     editorProps: {
       attributes: {
         class:
@@ -36,7 +27,7 @@ const TiptapTextEditor = ({ onChange, content }: any) => {
   });
 
   return (
-    <div className="w-full px-4">
+    <div className="w-full">
       <EditorToolbar editor={editor} content={content} />
       <EditorContent style={{ whiteSpace: "pre-line" }} editor={editor} />
     </div>

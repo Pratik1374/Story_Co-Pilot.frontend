@@ -27,9 +27,13 @@ const EditorToolbar = ({ editor, content }: Props) => {
   }
   return (
     <div
-      className="px-4 py-3 rounded-tl-md rounded-tr-md flex justify-between items-start
-    gap-5 w-full flex-wrap border border-gray-700 bg-black"
+      className="rounded-tl-md rounded-tr-md flex flex-col justify-between items-center
+    gap-2 w-full flex-wrap border border-gray-700 bg-black"
     >
+      <p className="text-center font-bold text-xl font-serif text-white pt-2">
+        Editor
+      </p>
+      <div className="flex w-full justify-between items-center border border-gray-700 p-1 gap-4">
       <div className="flex justify-start items-center gap-5 w-full lg:w-10/12 flex-wrap ">
         <button
           onClick={(e) => {
@@ -176,14 +180,15 @@ const EditorToolbar = ({ editor, content }: Props) => {
           <Redo className="w-5 h-5" />
         </button>
       </div>
-      {content && (
+      {content && content !== "" && (
         <button
           type="submit"
-          className="px-4 bg-gray-700 text-white py-2 rounded-md hover:bg-gray-600"
+          className="px-4 bg-gray-700 text-white rounded-md hover:bg-gray-600 h-[40px] w-[80px]"
         >
           Save
         </button>
       )}
+      </div>
     </div>
   );
 };

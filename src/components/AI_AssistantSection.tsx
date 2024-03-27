@@ -11,6 +11,7 @@ import Spinner from "@/components/Spinner";
 import axios, { AxiosResponse } from "axios";
 import { useAuth } from "@/context/AuthContext";
 import { usePathname } from "next/navigation";
+import DotLoader from "./DotLoader";
 
 interface PromptAndOutput {
   id: string;
@@ -73,7 +74,7 @@ const AI_AssistantSection = () => {
       if (selectedLengthTab === "tab_small_length") {
         lengthSetting = "Small";
       } else if (selectedLengthTab === "tab_medium_length") {
-        lengthSetting = "Medium";
+        lengthSetting = "Medium"; 
       } else if (selectedLengthTab === "tab_large_length") {
         lengthSetting = "Large";
       }
@@ -188,17 +189,23 @@ const AI_AssistantSection = () => {
           />
         </div>
 
-        <button
-          className={`relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-400 group-hover:from-purple-500 group-hover:to-purple-500-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 mt-5 ${
-            isLoading ? "cursor-not-allowed " : ""
-          }`}
-          disabled={isLoading}
-          onClick={handleSubmit}
-        >
-          <p className="flex w-full justify-center items-center px-5 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 group-hover:text-black text-center font-sans font-semibold">
-            Submit
-          </p>
-        </button>
+        {isLoading || historyLoader ? (
+          <div className="flex items-center justify-center flex-col w-full mt-5">
+            <DotLoader />
+          </div>
+        ) : (
+          <button
+            className={`relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-400 group-hover:from-purple-500 group-hover:to-purple-500-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 mt-5 ${
+              isLoading ? "cursor-not-allowed " : ""
+            }`}
+            disabled={isLoading}
+            onClick={handleSubmit}
+          >
+            <p className="flex w-full justify-center items-center px-5 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 group-hover:text-black text-center font-sans font-semibold">
+              Submit
+            </p>
+          </button>
+        )}
       </div>
 
       {/* outputs sections */}
@@ -217,7 +224,6 @@ const AI_AssistantSection = () => {
           </div>
         )}
 
-        {/* Display outputs in reverse order */}
         {!historyLoader && !isLoading && outputs.length === 0 && (
           <div className="w-full h-[60px] text-center p-2">
             <p className="text-sm">No any results yet</p>
@@ -255,10 +261,10 @@ const AI_AssistantSection = () => {
               <div className="flex p-1">{output.answer}</div>
             </div>
             <div className="flex w-full gap-2 justify-end  mt-3">
-              <button className="bg-purple-400 p-2 hover:bg-purple-500 rounded-lg text-sm text-black">
+              <button className="bg-purple-400 p-1 hover:bg-purple-500 rounded-lg text-sm font-mono text-black">
                 Replace selected text
               </button>
-              <button className="bg-purple-400 p-2 hover:bg-purple-500 rounded-lg text-sm text-black">
+              <button className="bg-purple-400 p-1 hover:bg-purple-500 rounded-lg text-sm font-mono text-black">
                 Move to editor
               </button>
             </div>

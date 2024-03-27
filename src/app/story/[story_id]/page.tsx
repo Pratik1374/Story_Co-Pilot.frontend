@@ -67,17 +67,13 @@ export default function StoryMainPage({
         </div>
 
         {/* editor section */}
-        <div className="h-full w-screen lg:w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500  p-2 my-bg-gradient text-black">
-          <p className="text-center font-bold text-xl font-serif mb-4 text-white">
-            Editor
-          </p>
-
+        <div className="h-full w-screen lg:w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500 pb-2 my-bg-gradient text-black">
           <TiptapTextEditor
             content={content}
             onChange={(newContent: string) => handleContentChange(newContent)}
           />
         </div>
-
+        
         {/* AI Assistant section drawer in mobile view */}
         <AI_AssistantDrawer
           is_open={isAssistantDrawerOpen}
