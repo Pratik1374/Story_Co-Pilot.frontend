@@ -8,7 +8,6 @@ import BulletList from "@tiptap/extension-bullet-list";
 import OrderedList from "@tiptap/extension-ordered-list";
 import Blockquote from "@tiptap/extension-blockquote";
 
-
 const TiptapTextEditor = ({ onChange, content }: any) => {
   const handleChange = (newContent: string) => {
     onChange(newContent);
