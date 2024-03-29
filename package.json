@@ -10,10 +10,7 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.10",
-    "@tiptap/extension-blockquote": "^2.2.4",
-    "@tiptap/extension-bullet-list": "^2.2.4",
     "@tiptap/extension-list-item": "^2.2.4",
-    "@tiptap/extension-ordered-list": "^2.2.4",
     "@tiptap/extension-text": "^2.2.4",
     "@tiptap/extension-underline": "^2.2.4",
     "@tiptap/pm": "^2.2.4",
@@ -26,7 +23,8 @@
     "next": "14.1.0",
     "postcss-nesting": "^12.1.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hot-toast": "^2.4.1"
   },
   "devDependencies": {
     "@types/node": "^20",

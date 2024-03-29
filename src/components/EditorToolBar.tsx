@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { type Editor } from "@tiptap/react";
 import {
   Bold,
@@ -18,6 +18,8 @@ import {
 import axios from "axios";
 import { useAuth } from "@/context/AuthContext";
 import { usePathname } from "next/navigation";
+import { Spinner } from "@nextui-org/react";
+import toast from "react-hot-toast";
 
 type Props = {
   editor: Editor | null;
@@ -29,10 +31,7 @@ const EditorToolbar = ({ editor, content }: Props) => {
   const pathname = usePathname();
   const segments = pathname.split("/");
   const story_id = segments.length > 2 ? segments[2] : null;
-
-  if (!editor) {
-    return null;
-  }
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const getEditorContent = async () => {
@@ -48,7 +47,9 @@ const EditorToolbar = ({ editor, content }: Props) => {
         );
 
         console.log(response.data);
-        
+        console.log(editor);
+        editor?.commands.setContent(response?.data?.editor_content);
+
         if (response.status === 200) {
           console.log("Got editor content");
         } else {
@@ -59,13 +60,15 @@ const EditorToolbar = ({ editor, content }: Props) => {
       }
     };
 
-    getEditorContent();
-  }, [story_id]);
+    if (editor) {
+      getEditorContent();
+    }
+  }, [editor]);
 
   const handleSave = async () => {
     try {
-      const editorContent = editor.getHTML();
-      console.log("editorcontent : ", editorContent);
+      setIsSaving(true);
+      const editorContent = editor?.getHTML();
       const token = await getLatestToken();
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/v1/story/save-editor-content/${story_id}`,
@@ -78,17 +81,46 @@ const EditorToolbar = ({ editor, content }: Props) => {
           },
         }
       );
-
       if (response.status === 200) {
-        alert("Saved successfully");
+        toast.success("Saved successfully", {
+          style: {
+            fontWeight: "bold",
+            border: "3px solid #07f72f",
+            borderRadius: "50px",
+            backgroundColor: "white",
+          },
+        });
+        setIsSaving(false);
       } else {
         console.error("Error saving content");
+        toast.error("Error occurred", {
+          style: {
+            fontWeight: "bold",
+            border: "3px solid red",
+            borderRadius: "50px",
+            backgroundColor: "white",
+          },
+        });
       }
     } catch (error) {
       console.error("Error saving content:", error);
+      toast.error("Error occurred", {
+        style: {
+          fontWeight: "bold",
+          border: "3px solid red",
+          borderRadius: "50px",
+          backgroundColor: "white",
+        },
+      });
       // Handle the error appropriately (display an error message, etc.)
+    } finally {
+      setIsSaving(false);
     }
   };
+
+  if (!editor) {
+    return null;
+  }
 
   return (
     <div
@@ -246,13 +278,19 @@ const EditorToolbar = ({ editor, content }: Props) => {
           </button>
         </div>
         {content && content !== "" && (
-          <button
-            type="submit"
-            className="px-4 bg-gray-700 text-white rounded-md hover:bg-gray-600 h-[40px] w-[80px]"
-            onClick={handleSave} // Attach the save handler
-          >
-            Save
-          </button>
+          <>
+            {isSaving ? (
+              <Spinner color="success" size="sm" label="Saving..." />
+            ) : (
+              <button
+                type="submit"
+                className="px-4 bg-gray-700 text-white rounded-md hover:bg-gray-600 h-[40px] w-[80px]"
+                onClick={handleSave}
+              >
+                Save
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>

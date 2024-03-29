@@ -100,7 +100,7 @@ const AI_AssistantSection = ({
     <>
       <div className="flex flex-col w-full p-2">
         <h1 className="text-center font-bold text-xl font-serif">
-          Your AI Assistant
+          AI Assistant
         </h1>
 
         <div className="flex flex-col gap-1 mt-3">
