@@ -19,10 +19,16 @@ interface PromptAndOutput {
   answer: string;
 }
 
-const AI_AssistantSection = () => {
+const AI_AssistantSection = ({
+  historyLoader,
+  outputs,
+  setOutputs,
+}: {
+  historyLoader: boolean;
+  outputs: [PromptAndOutput] | [];
+  setOutputs: React.Dispatch<React.SetStateAction<[PromptAndOutput] | []>>;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [historyLoader, setHistoryLoader] = useState(false);
-  const [outputs, setOutputs] = useState<[PromptAndOutput] | []>([]);
   const [error, setError] = useState(null);
   const [selectedLengthTab, setSelectedLengthTab] = useState<string>("Medium");
   const [creativityValue, setCreativityValue] = useState<number | number[]>(
@@ -35,31 +41,7 @@ const AI_AssistantSection = () => {
   const segments = pathname.split("/");
   const story_id = segments.length > 2 ? segments[2] : null;
 
-  useEffect(() => {
-    setHistoryLoader(true);
-    const getPreviousAIConversation = async () => {
-      try {
-        const token = await getLatestToken();
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/story/get-ai-conversations/${story_id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        setOutputs(response.data.conversations);
-        // setHistoryLoader(false);
-      } catch (error) {
-        console.error("Error getting previous responses");
-      } finally {
-        setHistoryLoader(false);
-      }
-    };
-
-    getPreviousAIConversation();
-  }, [story_id]);
+  
 
   const handleSubmit = async () => {
     if (userPrompt === "") {

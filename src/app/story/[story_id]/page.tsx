@@ -10,6 +10,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import React from "react";
 
+interface PromptAndOutput {
+  id: string;
+  prompt: string;
+  answer: string;
+}
+
 export default function StoryMainPage({
   params,
 }: {
@@ -21,9 +27,25 @@ export default function StoryMainPage({
   const [isValidating, setIsValidating] = useState(false);
   const [isAssistantDrawerOpen, setIsAssistantDrawerOpen] = useState(false);
   const [content, setContent] = useState<string>("");
+  const [isDesktopView, setIsDesktopView] = useState(true);
+  const [historyLoader, setHistoryLoader] = useState(false);
+  const [outputs, setOutputs] = useState<[PromptAndOutput] | []>([]);
+
   const handleContentChange = (reason: any) => {
     setContent(reason);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktopView(window.innerWidth > 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const validateStoryId = async () => {
@@ -53,6 +75,32 @@ export default function StoryMainPage({
     validateStoryId();
   }, [params.story_id]);
 
+  useEffect(() => {
+    setHistoryLoader(true);
+    const getPreviousAIConversation = async () => {
+      try {
+        const token = await getLatestToken();
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/story/get-ai-conversations/${story_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setOutputs(response.data.conversations);
+        // setHistoryLoader(false);
+      } catch (error) {
+        console.error("Error getting previous responses");
+      } finally {
+        setHistoryLoader(false);
+      }
+    };
+
+    getPreviousAIConversation();
+  }, [params.story_id]);
+
   if (isValidating) {
     return <></>;
   }
@@ -62,9 +110,15 @@ export default function StoryMainPage({
       <Header set_is_assistant_drawer_open={setIsAssistantDrawerOpen} />
       <div className="flex h-screen w-screen bg-gray-600 overflow-auto pt-[60px] scrollbar-thin scrollbar-thumb-gray-500">
         {/* AI prompting section */}
-        <div className="hidden md:flex flex-col bg-black h-full w-[35%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500">
-          <AI_AssistantSection />
-        </div>
+        {isDesktopView && (
+          <div className="hidden md:flex flex-col bg-black h-full w-[35%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500">
+            <AI_AssistantSection
+              historyLoader={historyLoader}
+              outputs={outputs}
+              setOutputs={setOutputs}
+            />
+          </div>
+        )}
 
         {/* editor section */}
         <div className="h-full w-screen lg:w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500 pb-2 my-bg-gradient text-black">
@@ -73,14 +127,20 @@ export default function StoryMainPage({
             onChange={(newContent: string) => handleContentChange(newContent)}
           />
         </div>
-        
+
         {/* AI Assistant section drawer in mobile view */}
-        <AI_AssistantDrawer
-          is_open={isAssistantDrawerOpen}
-          set_is_open={setIsAssistantDrawerOpen}
-        >
-          <AI_AssistantSection />
-        </AI_AssistantDrawer>
+        {!isDesktopView && (
+          <AI_AssistantDrawer
+            is_open={isAssistantDrawerOpen}
+            set_is_open={setIsAssistantDrawerOpen}
+          >
+            <AI_AssistantSection
+              historyLoader={historyLoader}
+              outputs={outputs}
+              setOutputs={setOutputs}
+            />
+          </AI_AssistantDrawer>
+        )}
       </div>
     </main>
   );

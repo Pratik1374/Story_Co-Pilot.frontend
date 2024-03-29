@@ -46,6 +46,8 @@ const EditorToolbar = ({ editor, content }: Props) => {
             },
           }
         );
+
+        console.log(response.data);
         
         if (response.status === 200) {
           console.log("Got editor content");
@@ -57,8 +59,8 @@ const EditorToolbar = ({ editor, content }: Props) => {
       }
     };
 
-    // getEditorContent();
-  }, []);
+    getEditorContent();
+  }, [story_id]);
 
   const handleSave = async () => {
     try {
