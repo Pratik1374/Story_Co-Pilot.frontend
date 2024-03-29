@@ -75,12 +75,11 @@ body {
   background-color: #6a6b6c;
 }
 
-
 .ProseMirror {
   padding: 10px;
   background: white;
   border-radius: 0 0 5px 5px;
-  min-height: 50vh;
+  min-height: 100%;
 }
 
 .ProseMirror p {
@@ -118,7 +117,7 @@ body {
 .ProseMirror pre {
   background: #0d0d0d;
   color: #fff;
-  font-family: 'JetBrainsMono', monospace;
+  font-family: "JetBrainsMono", monospace;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
 }
@@ -317,4 +316,3 @@ body {
     opacity: 0;
   }
 }
-

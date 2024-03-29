@@ -46,17 +46,10 @@ const EditorToolbar = ({ editor, content }: Props) => {
           }
         );
 
-        console.log(response.data);
-        console.log(editor);
         editor?.commands.setContent(response?.data?.editor_content);
 
-        if (response.status === 200) {
-          console.log("Got editor content");
-        } else {
-          console.error("Error saving content");
-        }
       } catch (error) {
-        console.error("Error saving content:", error);
+        console.error("Error getting previous content:", error);
       }
     };
 
@@ -112,7 +105,6 @@ const EditorToolbar = ({ editor, content }: Props) => {
           backgroundColor: "white",
         },
       });
-      // Handle the error appropriately (display an error message, etc.)
     } finally {
       setIsSaving(false);
     }

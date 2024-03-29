@@ -9,6 +9,9 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import React from "react";
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import { useEditor } from "@tiptap/react";
 
 interface PromptAndOutput {
   id: string;
@@ -31,9 +34,18 @@ export default function StoryMainPage({
   const [historyLoader, setHistoryLoader] = useState(false);
   const [outputs, setOutputs] = useState<[PromptAndOutput] | []>([]);
 
-  const handleContentChange = (reason: any) => {
-    setContent(reason);
-  };
+  const editor = useEditor({
+    extensions: [StarterKit, Underline],
+    editorProps: {
+      attributes: {
+        class:
+          "flex flex-col px-4 py-3 justify-start border-b border-r border-l border-gray-700 items-start w-full gap-1 font-medium text-[16px] pt-4 rounded-bl-md rounded-br-md outline-none text-black bg-white",
+      },
+    },
+    onUpdate: ({ editor }) => {
+      setContent(editor.getHTML());
+    },
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -122,10 +134,7 @@ export default function StoryMainPage({
 
         {/* editor section */}
         <div className="h-full w-screen lg:w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500 pb-2 my-bg-gradient text-black">
-          <TiptapTextEditor
-            content={content}
-            onChange={(newContent: string) => handleContentChange(newContent)}
-          />
+          <TiptapTextEditor content={content} editor={editor} />
         </div>
 
         {/* AI Assistant section drawer in mobile view */}
