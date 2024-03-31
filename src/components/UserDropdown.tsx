@@ -16,6 +16,7 @@ const UserDropdown = () => {
   const handleLogOut = async () => {
     await logout();
     alert("logged out");
+    router.push("/");
   };
 
   function handleAllStoriesClick(): void {

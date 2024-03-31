@@ -9,7 +9,7 @@ const TiptapTextEditor = ({ content, editor }: any) => {
     <div className="w-full h-full flex flex-col">
       <EditorToolbar editor={editor} content={content} />
       <div className="flex min-w-full flex-grow overflow-auto">
-      <EditorContent style={{ whiteSpace: "pre-line", minHeight: "100%" }} editor={editor} />
+      <EditorContent style={{ whiteSpace: "pre-line", minHeight: "100%",minWidth: "100%" }} editor={editor} />
       </div>
     </div>
   );

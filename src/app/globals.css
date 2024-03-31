@@ -316,3 +316,9 @@ body {
     opacity: 0;
   }
 }
+
+.login-page {
+  background-image: url("../../public/bg-crystals.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
