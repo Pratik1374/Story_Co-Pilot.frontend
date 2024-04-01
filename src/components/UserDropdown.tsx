@@ -37,11 +37,11 @@ const UserDropdown = () => {
         </div>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem key="new_story_dropdown">
+        {/* <DropdownItem key="new_story_dropdown">
           <button className="w-full bg-gray-700 py-1 px-3 rounded-md">
             Profile
           </button>
-        </DropdownItem>
+        </DropdownItem> */}
         <DropdownItem key="ai_assistant_dropdown">
           <button
             className="w-full bg-gray-700 py-1 px-3 rounded-md"

@@ -29,7 +29,7 @@ const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
   const router = useRouter();
   const [storyName, setStoryName] = useState("");
   const { user, getLatestToken, logout } = useAuth();
-  const [creatingNewStory,setCreatingNewStory] = useState(false);
+  const [creatingNewStory, setCreatingNewStory] = useState(false);
 
   const handleSave = async () => {
     if (storyName === "") {
@@ -123,45 +123,78 @@ const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
 
         {/* Mobile View */}
         <div className="md:hidden flex items-center justify-between w-screen">
-          <h1 className="text-xl font-bold text-purple-700">Story_Co-Pilot</h1>
+          <Link
+            href="/"
+            className={`${lobster.className} story-pilot-link text-3xl font-bold cursor-pointer`}
+          >
+            Story_Co-Pilot
+          </Link>
           <div className="flex gap-3 items-center">
-            <Dropdown>
-              <DropdownTrigger>
-                <div className="flex flex-col gap-[3px] p-2">
-                  <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
-                  <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
-                  <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
-                </div>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Static Actions">
-                <DropdownItem key="new_story_dropdown">
-                  <button
-                    className="w-full bg-gray-700 py-1 px-3 rounded-md"
-                    onClick={onOpen}
-                  >
-                    New Story
-                  </button>
-                </DropdownItem>
-                <DropdownItem key="ai_assistant_dropdown">
-                  <button
-                    className="w-full bg-gray-700 py-1 px-3 rounded-md"
-                    onClick={() => {
-                      if (set_is_assistant_drawer_open) {
-                        set_is_assistant_drawer_open(true);
-                      }
-                    }}
-                  >
-                    AI Assistant
-                  </button>
-                </DropdownItem>
-                <DropdownItem key="generate_images_dropdown">
-                  <button className="w-full bg-gray-700 py-1 px-3 rounded-md">
-                    Generate Images
-                  </button>
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            <UserDropdown />
+            {user ? (
+              <>
+                <Dropdown>
+                  <DropdownTrigger>
+                    <div className="flex flex-col gap-[3px] p-2">
+                      <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
+                      <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
+                      <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
+                    </div>
+                  </DropdownTrigger>
+                  <DropdownMenu aria-label="Static Actions">
+                    <DropdownItem key="new_story_dropdown">
+                      <button
+                        className="w-full bg-gray-700 py-1 px-3 rounded-md"
+                        onClick={onOpen}
+                      >
+                        New Story
+                      </button>
+                    </DropdownItem>
+                    <DropdownItem key="ai_assistant_dropdown">
+                      <button
+                        className="w-full bg-gray-700 py-1 px-3 rounded-md"
+                        onClick={() => {
+                          if (set_is_assistant_drawer_open) {
+                            set_is_assistant_drawer_open(true);
+                          }
+                        }}
+                      >
+                        AI Assistant
+                      </button>
+                    </DropdownItem>
+                    <DropdownItem key="generate_images_dropdown">
+                      <button className="w-full bg-gray-700 py-1 px-3 rounded-md">
+                        Generate Images
+                      </button>
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+                <UserDropdown />
+              </>
+            ) : (
+              <>
+                <button
+                  className="shooting-star-border"
+                  onClick={() => router.push("/login")}
+                >
+                  <span className="spark__container">
+                    <span className="spark" />
+                  </span>
+                  <span className="backdrop" />
+                  <span className="text">Login</span>
+                </button>
+
+                <button
+                  className="shooting-star-border"
+                  onClick={() => router.push("/register")}
+                >
+                  <span className="spark__container">
+                    <span className="spark" />
+                  </span>
+                  <span className="backdrop" />
+                  <span className="text">Register</span>
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
