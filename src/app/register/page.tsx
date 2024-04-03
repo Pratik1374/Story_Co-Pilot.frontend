@@ -227,7 +227,7 @@ const Register: NextPage = () => {
               <div className="flex items-center mt-6 justify-center">
                 <Link
                   href="/login"
-                  className="border-b-1 border-gray-400 text-gray-400"
+                  className="border-b-1 border-gray-400 text-gray-400 hover:text-gray-300  hover:border-gray-300"
                 >
                   Already have an account? Sign In here
                 </Link>
@@ -250,17 +250,12 @@ const Register: NextPage = () => {
               <img
                 src="/AI_bot.svg"
                 alt="logo"
-                className="w-[450px] lg:h-[250px] h-[550px]"
+                className="w-[450px] lg:h-[300px] h-[550px]"
               />
             </div>
           </div>
         </div>
       </div>
-      {/* <div className="flex-grow">
-        <div className="flex-grow bg-black">
-          <img src="/wave.svg" alt="wave" className="" />
-        </div>
-      </div> */}
     </div>
   );
 };

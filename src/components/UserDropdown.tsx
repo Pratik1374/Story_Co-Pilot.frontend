@@ -15,7 +15,6 @@ const UserDropdown = () => {
   const router = useRouter();
   const handleLogOut = async () => {
     await logout();
-    alert("logged out");
     router.push("/");
   };
 
@@ -42,7 +41,7 @@ const UserDropdown = () => {
             Profile
           </button>
         </DropdownItem> */}
-        <DropdownItem key="ai_assistant_dropdown">
+        <DropdownItem key="ai_assistant_dropdown" aria-label="all stories">
           <button
             className="w-full bg-gray-700 py-1 px-3 rounded-md"
             onClick={() => handleAllStoriesClick()}
@@ -50,7 +49,7 @@ const UserDropdown = () => {
             All Stories
           </button>
         </DropdownItem>
-        <DropdownItem key="generate_images_dropdown">
+        <DropdownItem key="generate_images_dropdown" aria-label="log out">
           <button
             className="w-full bg-gray-700 py-1 px-3 rounded-md"
             onClick={() => handleLogOut()}

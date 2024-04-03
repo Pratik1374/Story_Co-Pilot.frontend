@@ -11,29 +11,44 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  divider,
 } from "@nextui-org/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import UserDropdown from "./UserDropdown";
 import { lobster, acme } from "../utils/fonts";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 interface HeaderProps {
   set_is_assistant_drawer_open?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
+const Header: FC<HeaderProps> = (props) => {
+  const { set_is_assistant_drawer_open } = props;
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const router = useRouter();
   const [storyName, setStoryName] = useState("");
   const { user, getLatestToken, logout } = useAuth();
   const [creatingNewStory, setCreatingNewStory] = useState(false);
+  const [onStoryMainPage, setOnStoryMainPage] = useState(false);
+
+  useEffect(() => {
+    if (set_is_assistant_drawer_open !== undefined) {
+      setOnStoryMainPage(true);
+    }
+  }, []);
 
   const handleSave = async () => {
     if (storyName === "") {
-      alert("Please enter story name");
+      toast.error("Please enter story name", {
+        style: {
+          fontWeight: "bold",
+          border: "3px solid red",
+          borderRadius: "50px",
+          backgroundColor: "white",
+        },
+      });
       return;
     }
     const token = await getLatestToken();
@@ -53,8 +68,6 @@ const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
       if (response) {
         console.log("response", response);
         const storyId = response.data.story_id;
-        console.log(storyId);
-
         router.push(`/story/${storyId}`);
       } else {
         console.error("Error making API call");
@@ -85,11 +98,13 @@ const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
                 >
                   New Story
                 </button>
-                <button
-                  className={`${acme.className} hover:bg-gray-700 bg-gray-800 px-4 py-2 rounded-full`}
-                >
-                  Generate Images
-                </button>
+                {onStoryMainPage && (
+                  <button
+                    className={`${acme.className} hover:bg-gray-700 bg-gray-800 px-4 py-2 rounded-full`}
+                  >
+                    Generate Images
+                  </button>
+                )}
 
                 <UserDropdown />
               </>
@@ -132,42 +147,61 @@ const Header: FC<HeaderProps> = ({ set_is_assistant_drawer_open }) => {
           <div className="flex gap-3 items-center">
             {user ? (
               <>
-                <Dropdown>
-                  <DropdownTrigger>
-                    <div className="flex flex-col gap-[3px] p-2">
-                      <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
-                      <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
-                      <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
-                    </div>
-                  </DropdownTrigger>
-                  <DropdownMenu aria-label="Static Actions">
-                    <DropdownItem key="new_story_dropdown">
-                      <button
-                        className="w-full bg-gray-700 py-1 px-3 rounded-md"
-                        onClick={onOpen}
+                {onStoryMainPage ? (
+                  <Dropdown>
+                    <DropdownTrigger>
+                      <div className="flex flex-col gap-[3px] p-2">
+                        <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
+                        <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
+                        <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
+                      </div>
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label="Static Actions">
+                      <DropdownItem
+                        key="new_story_dropdown"
+                        aria-label="new story"
                       >
-                        New Story
-                      </button>
-                    </DropdownItem>
-                    <DropdownItem key="ai_assistant_dropdown">
-                      <button
-                        className="w-full bg-gray-700 py-1 px-3 rounded-md"
-                        onClick={() => {
-                          if (set_is_assistant_drawer_open) {
-                            set_is_assistant_drawer_open(true);
-                          }
-                        }}
+                        <button
+                          className="w-full bg-gray-700 py-1 px-3 rounded-md"
+                          onClick={onOpen}
+                        >
+                          New Story
+                        </button>
+                      </DropdownItem>
+                      <DropdownItem
+                        key="ai_assistant_dropdown"
+                        aria-label="ai assistant"
                       >
-                        AI Assistant
-                      </button>
-                    </DropdownItem>
-                    <DropdownItem key="generate_images_dropdown">
-                      <button className="w-full bg-gray-700 py-1 px-3 rounded-md">
-                        Generate Images
-                      </button>
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
+                        <button
+                          className="w-full bg-gray-700 py-1 px-3 rounded-md"
+                          onClick={() => {
+                            if (set_is_assistant_drawer_open !== undefined) {
+                              set_is_assistant_drawer_open(true);
+                            }
+                          }}
+                        >
+                          AI Assistant
+                        </button>
+                      </DropdownItem>
+                      <DropdownItem
+                        key="generate_images_dropdown"
+                        aria-label="generate images"
+                      >
+                        <button className="w-full bg-gray-700 py-1 px-3 rounded-md">
+                          Generate Images
+                        </button>
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                ) : (
+                  <button
+                    className={`${acme.className} hover:bg-gray-700 bg-gray-800 px-4 py-2 rounded-full`}
+                    onClick={onOpen}
+                  >
+                    New Story
+                  </button>
+                )}
+
                 <UserDropdown />
               </>
             ) : (

@@ -156,7 +156,7 @@ const Login: NextPage = () => {
               <div className="flex items-center mt-6 justify-center">
                 <Link
                   href="/register"
-                  className="border-b-1 border-gray-400 text-gray-400"
+                  className="border-b-1 border-gray-400 text-gray-400 hover:text-gray-300  hover:border-gray-300"
                 >
                   Don't have an account? Sign Up here
                 </Link>
@@ -179,7 +179,7 @@ const Login: NextPage = () => {
               <img
                 src="/AI_bot.svg"
                 alt="logo"
-                className="w-[450px] lg:h-[250px] h-[550px]"
+                className="w-[450px] lg:h-[300px] h-[550px]"
               />
             </div>
           </div>

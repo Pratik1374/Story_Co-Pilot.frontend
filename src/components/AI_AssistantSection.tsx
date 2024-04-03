@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   Avatar,
   AvatarIcon,
@@ -19,15 +19,14 @@ interface PromptAndOutput {
   answer: string;
 }
 
-const AI_AssistantSection = ({
-  historyLoader,
-  outputs,
-  setOutputs,
-}: {
-  historyLoader: boolean;
+interface AI_AssistantProps {
+  history_loader: boolean;
   outputs: [PromptAndOutput] | [];
-  setOutputs: React.Dispatch<React.SetStateAction<[PromptAndOutput] | []>>;
-}) => {
+  set_outputs: React.Dispatch<React.SetStateAction<[PromptAndOutput] | []>>;
+}
+
+const AI_AssistantSection: FC<AI_AssistantProps> = (props) => {
+  const { history_loader, outputs, set_outputs } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedLengthTab, setSelectedLengthTab] = useState<string>("Medium");
@@ -40,8 +39,6 @@ const AI_AssistantSection = ({
   const pathname = usePathname();
   const segments = pathname.split("/");
   const story_id = segments.length > 2 ? segments[2] : null;
-
-  
 
   const handleSubmit = async () => {
     if (userPrompt === "") {
@@ -56,7 +53,7 @@ const AI_AssistantSection = ({
       if (selectedLengthTab === "tab_small_length") {
         lengthSetting = "Small";
       } else if (selectedLengthTab === "tab_medium_length") {
-        lengthSetting = "Medium"; 
+        lengthSetting = "Medium";
       } else if (selectedLengthTab === "tab_large_length") {
         lengthSetting = "Large";
       }
@@ -81,7 +78,7 @@ const AI_AssistantSection = ({
 
       console.log(response);
 
-      setOutputs(
+      set_outputs(
         (prevOutputs: [PromptAndOutput] | []) =>
           [
             { prompt: userPrompt, answer: response?.data?.data },
@@ -171,7 +168,7 @@ const AI_AssistantSection = ({
           />
         </div>
 
-        {isLoading || historyLoader ? (
+        {isLoading || history_loader ? (
           <div className="flex items-center justify-center flex-col w-full mt-5">
             <DotLoader />
           </div>
@@ -199,14 +196,14 @@ const AI_AssistantSection = ({
           </div>
         )}
 
-        {historyLoader && outputs.length === 0 && (
+        {history_loader && outputs.length === 0 && (
           <div className="flex items-center justify-center flex-col w-full  mt-3 p-2 h-[200px]">
             <p className="text-sm mb-1">Loading history...</p>
             <Spinner />
           </div>
         )}
 
-        {!historyLoader && !isLoading && outputs.length === 0 && (
+        {!history_loader && !isLoading && outputs.length === 0 && (
           <div className="w-full h-[60px] text-center p-2">
             <p className="text-sm">No any results yet</p>
           </div>

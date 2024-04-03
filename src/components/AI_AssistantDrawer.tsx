@@ -6,7 +6,8 @@ interface DrawerProps {
   set_is_open: (open: boolean) => void;
 }
 
-const AI_AssistantDrawer: FC<DrawerProps> = ({ children, is_open, set_is_open }) => {
+const AI_AssistantDrawer: FC<DrawerProps> = (props) => {
+  const { children, is_open, set_is_open } = props;
   return (
     <main
       className={
@@ -19,7 +20,7 @@ const AI_AssistantDrawer: FC<DrawerProps> = ({ children, is_open, set_is_open })
       <section
         className={
           " w-[80vw] max-w-lg left-0 absolute bg-black h-full shadow-xl delay-400 duration-500 ease-in-out transition-all transform " +
-          (is_open ? " translate-x-0 " : " -translate-x-[80vw] ") 
+          (is_open ? " translate-x-0 " : " -translate-x-[80vw] ")
         }
       >
         <article className="relative w-[80vw] max-w-[80vw] pb-10 flex flex-col space-y-6 overflow-y-scroll h-full">

@@ -125,9 +125,9 @@ export default function StoryMainPage({
         {isDesktopView && (
           <div className="hidden md:flex flex-col bg-black h-full w-[35%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500">
             <AI_AssistantSection
-              historyLoader={historyLoader}
+              history_loader={historyLoader}
               outputs={outputs}
-              setOutputs={setOutputs}
+              set_outputs={setOutputs}
             />
           </div>
         )}
@@ -138,18 +138,16 @@ export default function StoryMainPage({
         </div>
 
         {/* AI Assistant section drawer in mobile view */}
-        {!isDesktopView && (
-          <AI_AssistantDrawer
-            is_open={isAssistantDrawerOpen}
-            set_is_open={setIsAssistantDrawerOpen}
-          >
-            <AI_AssistantSection
-              historyLoader={historyLoader}
-              outputs={outputs}
-              setOutputs={setOutputs}
-            />
-          </AI_AssistantDrawer>
-        )}
+        <AI_AssistantDrawer
+          is_open={isAssistantDrawerOpen}
+          set_is_open={setIsAssistantDrawerOpen}
+        >
+          <AI_AssistantSection
+            history_loader={historyLoader}
+            outputs={outputs}
+            set_outputs={setOutputs}
+          />
+        </AI_AssistantDrawer>
       </div>
     </main>
   );
