@@ -339,7 +339,7 @@ body {
       rgb(248, 24, 244)
     ),
     linear-gradient(#000000, #141414);
-  animation: rotateOuterCircle 8s linear infinite;
+  animation: rotateOuterCircle 9s linear infinite;
 }
 
 .outer-circle:before,
@@ -378,7 +378,7 @@ body {
       rgb(248, 24, 244)
     ),
     linear-gradient(#000000, #141414);
-  animation: rotateInnerCircle 12s linear infinite;
+  animation: rotateInnerCircle 5s linear infinite;
 }
 
 .inner-circle:before,
@@ -408,15 +408,74 @@ body {
 }
 
 .blue_gradient {
-  background: linear-gradient(to right, #2563eb, #10b981);
+  /* background: linear-gradient(to right, #2563eb, #10b981);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent; */
+
+  background: linear-gradient(to right, #faca8b, #6aebef);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
 }
 
 .landing-page-subheading {
-  background: #fafafa;
-  background: linear-gradient(to right, #fafafa 0%, #e6dfd8 100%);
+  /* background: #ffffff;
+  background: linear-gradient(to right, #ffffff 0%, #dadada 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent; */
+  color: white;
+}
+
+
+@keyframes rotateBorder {
+	100% {
+		transform: rotate(1turn);
+	}
+}
+
+.get-started-rotating-border {
+	position: relative;
+	/* margin: 300px auto 0; */
+	width: 200px;
+	height: 60px;
+	background: linear-gradient(0deg, #000, #272727);
+  display: flex;
+  justify-content: center;
+	align-items: center;
+}
+
+.get-started-rotating-border:before, .get-started-rotating-border:after {
+	content: '';
+	position: absolute;
+	left: -2px;
+	top: -2px;
+	background: linear-gradient(45deg, #0a25f4, #06e8ec, #01d4e3,#47015a,#cd68ef);
+	background-size: 400%;
+	width: calc(100% + 4px);
+	height: calc(100% + 4px);
+	z-index: -1;
+	animation: steam 20s linear infinite;
+  border-radius: 9999px;
+}
+
+@keyframes steam {
+	0% {
+		background-position: 0 0;
+	}
+	50% {
+		background-position: 400% 0;
+	}
+	100% {
+		background-position: 0 0;
+	}
+}
+
+.get-started-rotating-border:after {
+	filter: blur(2px);
+}
+
+.landing-main {
+  background-image: url('../../public/grid.svg');
+  z-index: -1;
 }

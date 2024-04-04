@@ -15,62 +15,41 @@ export default function Home() {
   }, [user]);
 
   return (
-    <main className="flex flex-col min-h-screen w-full overflow-auto">
+    <main className=" flex flex-col min-h-screen w-full overflow-auto">
       <Header />
 
       {/* intro section */}
-      <div className="absolute flex pt-[100px] flex-col items-center max-h-[40vw] overflow-hidden">
+      <div className="landing-main absolute top-[60px] left-0 right-0 m-auto flex pt-[100px] flex-col items-center  max-h-[50vh] lg:max-h-[30vw] overflow-hidden">
         <div className="">
-          <div className="outer-circle w-[90vw] h-[90vw] flex items-center justify-center">
-            <div className="inner-circle z-10 w-[70%] h-[70%] flex items-center justify-center"></div>
+          <div className="outer-circle w-[100vh] h-[100vh] lg:w-[90vw] lg:h-[90vw] flex items-center justify-center border border-gray-700">
+            <div className="inner-circle z-10 w-[70%] h-[70%] flex items-center justify-center border border-gray-700"></div>
           </div>
         </div>
       </div>
 
-      <div className="h-[50vh] lg:h-[40vw] z-20 pt-[100px] flex flex-col items-center justify-center">
+      <div className="mt-[40px] lg:mt-[100px] h-[50vh] lg:h-[30vw] z-20 flex flex-col items-center justify-center">
         <h1
-          className={`${kreon.className} z-15 lg:text-5xl text-2xl text-center blue_gradient overflow-visible pb-2 `}
+          className={`${kreon.className} z-15 lg:text-7xl text-3xl text-center blue_gradient overflow-visible pb-2 `}
         >
           Your AI Writing Companion Awaits
         </h1>
         <h2
-          className={`${quintessential.className} z-15 mt-3 lg:text-xl text-sm text-center landing-page-subheading`}
+          className={`${quintessential.className} z-15 mt-3 lg:text-2xl text-center landing-page-subheading`}
         >
           Elevate your writing with cutting-edge AI, rich editing, and stunning
           visuals.
         </h2>
-        <button className="mt-3 lg:mt-16">Get Started</button>
-      </div>
-
-      {/* <div className="flex w-screen pt-[80px] justify-center overflow-hidden h-[40vw]">
-        <div className="outer-circle w-[90vw] h-[90vw] flex flex-col justify-start lg:justify-center items-center border border-gray-500 box">
-          <div className="z-10 overflow-visible flex flex-col items-center justify-start inner-content w-[90vw] h-[90vw] border border-green-500 pt-16">
-            <h1
-              className={`${kreon.className} z-15 lg:text-5xl text-2xl text-center blue_gradient overflow-visible pb-2 `}
-            >
-              Your AI Writing Companion Awaits
-            </h1>
-            <h2
-              className={`${quintessential.className} z-15 mt-3 lg:text-xl text-sm text-center landing-page-subheading`}
-            >
-              Elevate your writing with cutting-edge AI, rich editing, and
-              stunning visuals.
-            </h2>
-            <button className="lg:mt-6">Get Started</button>
+        <div className="mt-16 lg:mt-16 cursor-pointer group">
+          <div className="get-started-rotating-border rounded-full font-serif font-bold text-xl group-hover:bg-gray-600">
+            Get Started
           </div>
         </div>
-      </div> */}
-      <div className="flex">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit
-        molestias tempore rem voluptates numquam ipsam inventore doloribus,
-        voluptatibus earum deserunt alias tenetur dignissimos illo atque quo ex
-        ipsa explicabo facere. Animi cum illum enim beatae vero explicabo alias
-        atque excepturi eligendi eius asperiores soluta minus recusandae quaerat
-        perspiciatis, voluptatem deleniti quod. Amet deleniti, maxime aspernatur
-        repellat quod molestiae inventore autem. Laboriosam ipsa exercitationem
-        ex rem tempora nihil maiores. Ex odio in excepturi dolorem est nisi
-        sint, non eum eaque obcaecati repudiandae. Nesciunt culpa veniam, aut ab
-        sunt accusamus libero pariatur.
+      </div>
+
+      <div className="flex px-3">
+        <div>
+          <h1 className="font-bold text-2xl">What is Story-Co-Pilot?</h1>
+        </div>
       </div>
     </main>
   );
