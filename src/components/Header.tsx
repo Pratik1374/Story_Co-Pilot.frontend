@@ -78,7 +78,7 @@ const Header: FC<HeaderProps> = (props) => {
   };
 
   return (
-    <header className="top-0 absolute bg-gray-950 text-white p-4 border-b border-gray-700 w-screen h-[60px] flex items-center">
+    <header className="top-0 absolute bg-gray-950 text-white border-b border-gray-700 h-[60px] flex items-center w-full px-4">
       <div className="w-full flex items-center justify-between">
         {/* Desktop View */}
 

@@ -20,6 +20,12 @@ body {
   color: rgb(var(--foreground-rgb));
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -316,44 +322,101 @@ body {
   }
 }
 
-
 .login-card-shadow {
-  -webkit-box-shadow: 0px 0px 11px -3px rgba(247,247,247,1);
--moz-box-shadow: 0px 0px 11px -3px rgba(247,247,247,1);
-box-shadow: 0px 0px 11px -3px rgba(247,247,247,1);
+  -webkit-box-shadow: 0px 0px 11px -3px rgba(247, 247, 247, 1);
+  -moz-box-shadow: 0px 0px 11px -3px rgba(247, 247, 247, 1);
+  box-shadow: 0px 0px 11px -3px rgba(247, 247, 247, 1);
 }
-
 
 /* home page cicle animation  */
-.box {
+.outer-circle {
   position: relative;
   border-radius: 50%;
-  background: linear-gradient(455eg, transparent, transparent 60%, rgb(248, 24, 244)),
+  background: linear-gradient(
+      455eg,
+      transparent,
+      transparent 60%,
+      rgb(248, 24, 244)
+    ),
     linear-gradient(#000000, #141414);
-  animation: rotateCircle 8.5s linear infinite;
+  animation: rotateOuterCircle 8s linear infinite;
 }
 
-.box:before,
-.box:after {
+.outer-circle:before,
+.outer-circle:after {
   content: " ";
   position: absolute;
-  inset: 3px;
+  inset: 0px;
   background: black;
   border-radius: inherit;
 }
 
-.box:before {
-  background: linear-gradient(45deg, transparent, transparent 60%, rgb(247, 69, 241));
+.outer-circle:before {
+  background: linear-gradient(
+    45deg,
+    transparent,
+    transparent 60%,
+    rgb(247, 69, 241)
+  );
   filter: blur(32px);
 }
 
-@keyframes rotateCircle {
+@keyframes rotateOuterCircle {
   100% {
     transform: rotate(360deg);
     filter: hue-rotate(360deg);
   }
 }
 
-.outer-circle {
-  border-radius: 45vw 45vw 0 0;
+.inner-circle {
+  position: relative;
+  border-radius: 50%;
+  background: linear-gradient(
+      455eg,
+      transparent,
+      transparent 60%,
+      rgb(248, 24, 244)
+    ),
+    linear-gradient(#000000, #141414);
+  animation: rotateInnerCircle 12s linear infinite;
+}
+
+.inner-circle:before,
+.inner-circle:after {
+  content: " ";
+  position: absolute;
+  inset: 0px;
+  background: black;
+  border-radius: inherit;
+}
+
+.inner-circle:before {
+  background: linear-gradient(
+    45deg,
+    transparent,
+    transparent 60%,
+    rgb(247, 69, 241)
+  );
+  filter: blur(32px);
+}
+
+@keyframes rotateInnerCircle {
+  100% {
+    transform: rotate(360deg);
+    filter: hue-rotate(360deg);
+  }
+}
+
+.blue_gradient {
+  background: linear-gradient(to right, #2563eb, #10b981);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.landing-page-subheading {
+  background: #fafafa;
+  background: linear-gradient(to right, #fafafa 0%, #e6dfd8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

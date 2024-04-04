@@ -3,6 +3,7 @@
 import AI_AssistantSection from "@/components/AI_AssistantSection";
 import Header from "@/components/Header";
 import { useAuth } from "@/context/AuthContext";
+import { kreon, lobster, quintessential } from "@/utils/fonts";
 import { useEffect, useState } from "react";
 import React from "react";
 
@@ -14,35 +15,51 @@ export default function Home() {
   }, [user]);
 
   return (
-    <main className="flex flex-col min-h-screen w-screen overflow-auto">
+    <main className="flex flex-col min-h-screen w-full overflow-auto">
       <Header />
 
       {/* intro section */}
-      {/* <div className="flex pt-[100px] flex-col items-center max-h-[40vw] overflow-hidden">
+      <div className="absolute flex pt-[100px] flex-col items-center max-h-[40vw] overflow-hidden">
         <div className="">
-          <div className="box w-[90vw] h-[90vw] flex items-center justify-center">
-            <div className="box z-10 w-[70%] h-[70%] flex items-center justify-center"></div>
+          <div className="outer-circle w-[90vw] h-[90vw] flex items-center justify-center">
+            <div className="inner-circle z-10 w-[70%] h-[70%] flex items-center justify-center"></div>
           </div>
-          <div className="absolute top-[60px] z-20">
-            <h1 className="lg:text-6xl text-2xl ">
-              Your Storytelling Revolution Starts Here
+        </div>
+      </div>
+
+      <div className="h-[50vh] lg:h-[40vw] z-20 pt-[100px] flex flex-col items-center justify-center">
+        <h1
+          className={`${kreon.className} z-15 lg:text-5xl text-2xl text-center blue_gradient overflow-visible pb-2 `}
+        >
+          Your AI Writing Companion Awaits
+        </h1>
+        <h2
+          className={`${quintessential.className} z-15 mt-3 lg:text-xl text-sm text-center landing-page-subheading`}
+        >
+          Elevate your writing with cutting-edge AI, rich editing, and stunning
+          visuals.
+        </h2>
+        <button className="mt-3 lg:mt-16">Get Started</button>
+      </div>
+
+      {/* <div className="flex w-screen pt-[80px] justify-center overflow-hidden h-[40vw]">
+        <div className="outer-circle w-[90vw] h-[90vw] flex flex-col justify-start lg:justify-center items-center border border-gray-500 box">
+          <div className="z-10 overflow-visible flex flex-col items-center justify-start inner-content w-[90vw] h-[90vw] border border-green-500 pt-16">
+            <h1
+              className={`${kreon.className} z-15 lg:text-5xl text-2xl text-center blue_gradient overflow-visible pb-2 `}
+            >
+              Your AI Writing Companion Awaits
             </h1>
-            <h2>
+            <h2
+              className={`${quintessential.className} z-15 mt-3 lg:text-xl text-sm text-center landing-page-subheading`}
+            >
               Elevate your writing with cutting-edge AI, rich editing, and
               stunning visuals.
             </h2>
-            <button>Get Started</button>
+            <button className="lg:mt-6">Get Started</button>
           </div>
         </div>
       </div> */}
-
-      <div className="flex w-screen bg-green-800 pt-[160px] justify-center overflow-hidden ">
-        <div className="outer-circle w-[90vw] h-[45vw] bg-blue-700 flex justify-center">
-           <div className="inner-circle w-[40vw] h-[20vw] bg-pink-400">
-
-            </div> 
-        </div>
-      </div>
       <div className="flex">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit
         molestias tempore rem voluptates numquam ipsam inventore doloribus,
