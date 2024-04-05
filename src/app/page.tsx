@@ -3,7 +3,14 @@
 import AI_AssistantSection from "@/components/AI_AssistantSection";
 import Header from "@/components/Header";
 import { useAuth } from "@/context/AuthContext";
-import { kreon, lobster, quintessential } from "@/utils/fonts";
+import {
+  kreon,
+  lobster,
+  merriweather,
+  nunito,
+  quintessential,
+} from "@/utils/fonts";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import React from "react";
 
@@ -19,15 +26,17 @@ export default function Home() {
       <Header />
 
       {/* intro section */}
-      <div className="landing-main absolute top-[60px] left-0 right-0 m-auto flex pt-[100px] flex-col items-center  max-h-[50vh] lg:max-h-[30vw] overflow-hidden">
+      {/* <div className="landing-main absolute top-[60px] left-0 right-0 m-auto flex pt-[100px] flex-col items-center h-[50vh] lg:h-[100vh] overflow-hidden">
         <div className="">
-          <div className="outer-circle w-[100vh] h-[100vh] lg:w-[90vw] lg:h-[90vw] flex items-center justify-center border border-gray-700">
-            <div className="inner-circle z-10 w-[70%] h-[70%] flex items-center justify-center border border-gray-700"></div>
+          <div className="outer-circle w-[100vh] h-[100vh] lg:w-[100vw] lg:h-[100vw] flex items-center justify-center border border-gray-700">
+            <div className="inner-circle z-10 w-[80%] h-[80%] flex items-center justify-center border border-gray-700">
+              <div className="inner-circle z-10 w-[80%] h-[80%] flex items-center justify-center border border-gray-700"></div>
+            </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="mt-[40px] lg:mt-[100px] h-[50vh] lg:h-[30vw] z-20 flex flex-col items-center justify-center">
+      <div className="pt-[40px] lg:pt-[100px] h-[50vh] lg:h-[100vh] z-20 flex flex-col items-center justify-center">
         <h1
           className={`${kreon.className} z-15 lg:text-7xl text-3xl text-center blue_gradient overflow-visible pb-2 `}
         >
@@ -39,17 +48,61 @@ export default function Home() {
           Elevate your writing with cutting-edge AI, rich editing, and stunning
           visuals.
         </h2>
-        <div className="mt-16 lg:mt-16 cursor-pointer group">
+        <div className="mt-16 lg:mt-20 cursor-pointer group">
           <div className="get-started-rotating-border rounded-full font-serif font-bold text-xl group-hover:bg-gray-600">
             Get Started
           </div>
         </div>
       </div>
 
-      <div className="flex px-3">
-        <div>
-          <h1 className="font-bold text-2xl">What is Story-Co-Pilot?</h1>
+      {/* what section */}
+      <div className="py-8 flex px-6 w-full lg:h-[430px] what-section">
+        <div className="w-full lg:w-[70%] bg-transparent">
+          <h1
+            className={`${merriweather.className} text-white font-bold text-2xl lg:text-4xl `}
+          >
+            What is Story-Co-Pilot?
+          </h1>
+          <h3
+            className={`${nunito.className} mt-3 text-xl font-semibold text-gray-300`}
+          >
+            Story_Co-Pilot is your all-in-one storytelling powerhouse. Our
+            platform features a rich text editor for crafting your narratives,
+            AI assistance to spark ideas and refine your writing, and integrated
+            AI image generation to bring your worlds to life. Unleash your
+            creativity, overcome writer's block, and produce captivating stories
+            with the help of Story_Co-Pilot.
+          </h3>
+
+          <button className="mt-8 px-10 py-3 rounded-lg font-bold border-3 border-gray-700 button-gradient shadow-md hover:shadow-purple-400 hover:scale-105">
+            Our Features
+          </button>
         </div>
+      </div>
+
+      {/* image generation info section*/}
+      <div className="py-12 flex px-6 w-full">
+        <div className="w-full flex items-center justify-center flex-col gap-2">
+          <h1
+            className={`${merriweather.className} font-bold text-2xl lg:text-4xl `}
+          >
+            Visualize Your Stories Instantly
+          </h1>
+          <h3>Enhance reader engagement with captivating illustrations generated on the fly</h3>
+        </div>
+      </div>
+
+      <div className="pt-6">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum iusto eius,
+        ea tenetur veritatis sequi dignissimos quis minima dolorum ipsa
+        necessitatibus ab, magni quibusdam iste quisquam blanditiis. Doloremque,
+        laboriosam veritatis. Eaque debitis nisi voluptas adipisci, expedita
+        veritatis dolores libero quo soluta dolorem, delectus aliquam quam iure
+        corporis omnis id natus nihil. Aspernatur iste distinctio repudiandae
+        veritatis minus tempora voluptates perferendis. Unde corrupti laudantium
+        animi vitae est repellendus eum fugit veniam quisquam voluptates quas,
+        praesentium facilis repellat atque excepturi rerum voluptatum! Magnam
+        perferendis libero veniam et cum dicta fugiat beatae earum.
       </div>
     </main>
   );
