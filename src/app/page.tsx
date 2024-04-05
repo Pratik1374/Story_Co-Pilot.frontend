@@ -2,6 +2,7 @@
 
 import AI_AssistantSection from "@/components/AI_AssistantSection";
 import Header from "@/components/Header";
+import ImageGenerationSection from "@/components/ImageGenerationSection";
 import { useAuth } from "@/context/AuthContext";
 import {
   kreon,
@@ -81,16 +82,7 @@ export default function Home() {
       </div>
 
       {/* image generation info section*/}
-      <div className="py-12 flex px-6 w-full">
-        <div className="w-full flex items-center justify-center flex-col gap-2">
-          <h1
-            className={`${merriweather.className} font-bold text-2xl lg:text-4xl `}
-          >
-            Visualize Your Stories Instantly
-          </h1>
-          <h3>Enhance reader engagement with captivating illustrations generated on the fly</h3>
-        </div>
-      </div>
+      <ImageGenerationSection/>
 
       <div className="pt-6">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum iusto eius,
