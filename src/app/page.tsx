@@ -2,6 +2,7 @@
 
 import Header from "@/components/Header";
 import FeaturesSection from "@/components/landing-page/FeaturesSection";
+import Footer from "@/components/landing-page/Footer";
 import ImageGenerationSection from "@/components/landing-page/ImageGenerationInfoSection";
 import { useAuth } from "@/context/AuthContext";
 import {
@@ -21,6 +22,13 @@ export default function Home() {
   useEffect(() => {
     console.log("user -> ", user);
   }, [user]);
+
+  const handleScrollClick = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <main className=" flex flex-col min-h-screen w-full overflow-auto">
@@ -75,46 +83,55 @@ export default function Home() {
             with the help of Story_Co-Pilot.
           </h3>
 
-          <button className="mt-8 px-10 py-3 rounded-lg font-bold border-3 border-gray-700 button-gradient shadow-md hover:shadow-purple-400 hover:scale-105">
+          <button
+            className="mt-8 px-10 py-3 rounded-lg font-bold border-3 border-gray-700 button-gradient shadow-md hover:shadow-purple-400 hover:scale-105"
+            onClick={() => handleScrollClick("features-section")}
+          >
             Our Features
           </button>
         </div>
       </div>
 
       {/* image generation info section*/}
-      <ImageGenerationSection/>
+      <ImageGenerationSection />
 
       {/* features section */}
-      <FeaturesSection/>
+      <FeaturesSection />
 
       {/* some taglines */}
-      <div className="py-12 px-6 flex w-full items-center justify-center lg:justify-around flex-wrap gap-4 circuit-board-bg h-[300px]">
+      <div className="py-12 px-6 flex w-full items-center justify-around flex-wrap gap-4 circuit-board-bg h-[100px] lg:h-[300px]">
         <div className="flex flex-col justify-center items-center">
-          <Image src="/write-icon.png" width={40} height={40} alt="write-icon"/>
-          <p className={`${quintessential.className} text-4xl mt-3 `}>Write</p>
+          <Image
+            src="/write-icon.png"
+            width={40}
+            height={40}
+            alt="write-icon"
+          />
+          <p className={`${quintessential.className} lg:text-4xl mt-3 `}>Write</p>
         </div>
         <div className="flex flex-col justify-center items-center">
-          <Image src="/refine-icon.png" width={40} height={40} alt="write-icon"/>
-          <p className={`${quintessential.className} text-4xl mt-3`}>Refine</p>
+          <Image
+            src="/refine-icon.png"
+            width={40}
+            height={40}
+            alt="write-icon"
+          />
+          <p className={`${quintessential.className} lg:text-4xl mt-3`}>Refine</p>
         </div>
         <div className="flex flex-col justify-center items-center">
-          <Image src="/visualize-icon.png" width={40} height={40} alt="write-icon"/>
-          <p className={`${quintessential.className} text-4xl mt-3`}>Visualize</p>
+          <Image
+            src="/visualize-icon.png"
+            width={40}
+            height={40}
+            alt="write-icon"
+          />
+          <p className={`${quintessential.className} lg:text-4xl mt-3`}>
+            Visualize
+          </p>
         </div>
       </div>
 
-      <div className="pt-6">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum iusto eius,
-        ea tenetur veritatis sequi dignissimos quis minima dolorum ipsa
-        necessitatibus ab, magni quibusdam iste quisquam blanditiis. Doloremque,
-        laboriosam veritatis. Eaque debitis nisi voluptas adipisci, expedita
-        veritatis dolores libero quo soluta dolorem, delectus aliquam quam iure
-        corporis omnis id natus nihil. Aspernatur iste distinctio repudiandae
-        veritatis minus tempora voluptates perferendis. Unde corrupti laudantium
-        animi vitae est repellendus eum fugit veniam quisquam voluptates quas,
-        praesentium facilis repellat atque excepturi rerum voluptatum! Magnam
-        perferendis libero veniam et cum dicta fugiat beatae earum.
-      </div>
+      <Footer/>
     </main>
   );
 }

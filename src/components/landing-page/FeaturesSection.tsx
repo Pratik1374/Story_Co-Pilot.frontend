@@ -4,7 +4,7 @@ import React from "react";
 
 const FeaturesSection = () => {
   return (
-    <div className="w-full flex flex-col gap-2">
+    <div id='features-section' className="w-full flex flex-col gap-2 px-1 lg:px-6">
       <h1
         className={`${merriweather.className} text-center font-bold text-2xl lg:text-4xl`}
       >
