@@ -120,17 +120,6 @@ const Header: FC<HeaderProps> = (props) => {
                   <span className="backdrop" />
                   <span className="text">Login</span>
                 </button>
-
-                <button
-                  className="shooting-star-border"
-                  onClick={() => router.push("/register")}
-                >
-                  <span className="spark__container">
-                    <span className="spark" />
-                  </span>
-                  <span className="backdrop" />
-                  <span className="text">Register</span>
-                </button>
               </>
             )}
           </div>
@@ -215,17 +204,6 @@ const Header: FC<HeaderProps> = (props) => {
                   </span>
                   <span className="backdrop" />
                   <span className="text">Login</span>
-                </button>
-
-                <button
-                  className="shooting-star-border"
-                  onClick={() => router.push("/register")}
-                >
-                  <span className="spark__container">
-                    <span className="spark" />
-                  </span>
-                  <span className="backdrop" />
-                  <span className="text">Register</span>
                 </button>
               </>
             )}

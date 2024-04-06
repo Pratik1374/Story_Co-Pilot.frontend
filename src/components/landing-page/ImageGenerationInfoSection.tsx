@@ -57,9 +57,8 @@ const ImageGenerationSection = () => {
         </h1>
         <Image src="/star-icon.png" alt="star" width={30} height={30}/>
         </div>
-        <h3 className={`${nunito.className} mt-3 font-semibold text-gray-300`}>
-          Enhance reader engagement with captivating illustrations generated on
-          the fly.
+        <h3 className={`${nunito.className} text-center mt-3 font-semibold text-gray-300 lg:max-w-[80vw]`}>
+        Enhance reader engagement with captivating illustrations generated dynamically, featuring unique characters, immersive backgrounds, and everything in between! 
         </h3>
       </div>
 
@@ -86,7 +85,7 @@ const ImageGenerationSection = () => {
             />
           </div>
         </div>
-        <div className="flex flex-col w-[30%] gap-3 overflow-hidden">
+        <div className="flex flex-col h-full w-[30%] gap-3 overflow-hidden justify-between">
           <div className="w-full h-[30%] object-contain overflow-hidden">
             <Image
               key={`horizontal-1`}

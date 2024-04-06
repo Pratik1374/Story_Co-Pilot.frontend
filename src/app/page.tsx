@@ -1,8 +1,8 @@
 "use client";
 
-import AI_AssistantSection from "@/components/AI_AssistantSection";
 import Header from "@/components/Header";
-import ImageGenerationSection from "@/components/ImageGenerationInfoSection";
+import FeaturesSection from "@/components/landing-page/FeaturesSection";
+import ImageGenerationSection from "@/components/landing-page/ImageGenerationInfoSection";
 import { useAuth } from "@/context/AuthContext";
 import {
   kreon,
@@ -83,6 +83,25 @@ export default function Home() {
 
       {/* image generation info section*/}
       <ImageGenerationSection/>
+
+      {/* features section */}
+      <FeaturesSection/>
+
+      {/* some taglines */}
+      <div className="py-12 px-6 flex w-full items-center justify-center lg:justify-around flex-wrap gap-4 circuit-board-bg h-[300px]">
+        <div className="flex flex-col justify-center items-center">
+          <Image src="/write-icon.png" width={40} height={40} alt="write-icon"/>
+          <p className={`${quintessential.className} text-4xl mt-3 `}>Write</p>
+        </div>
+        <div className="flex flex-col justify-center items-center">
+          <Image src="/refine-icon.png" width={40} height={40} alt="write-icon"/>
+          <p className={`${quintessential.className} text-4xl mt-3`}>Refine</p>
+        </div>
+        <div className="flex flex-col justify-center items-center">
+          <Image src="/visualize-icon.png" width={40} height={40} alt="write-icon"/>
+          <p className={`${quintessential.className} text-4xl mt-3`}>Visualize</p>
+        </div>
+      </div>
 
       <div className="pt-6">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum iusto eius,

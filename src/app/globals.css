@@ -513,6 +513,21 @@ body {
     rgb(0, 6, 7) 100%
   );
 
-  background-image: url('../../public/polygons.svg');
+  background-image: url("../../public/polygons.svg");
   background-size: cover;
+}
+
+.feature-card {
+  background: rgb(0, 0, 0);
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 78%,
+    rgba(98, 100, 116, 1) 100%
+  );
+}
+
+.circuit-board-bg {
+  background-image: url("../../public/circuit-board.svg");
+
 }
