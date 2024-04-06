@@ -2,7 +2,7 @@
 
 import AI_AssistantSection from "@/components/AI_AssistantSection";
 import Header from "@/components/Header";
-import ImageGenerationSection from "@/components/ImageGenerationSection";
+import ImageGenerationSection from "@/components/ImageGenerationInfoSection";
 import { useAuth } from "@/context/AuthContext";
 import {
   kreon,

@@ -49,7 +49,7 @@ const ImageGenerationSection = () => {
     <div className="py-12 flex px-6 w-full flex-col">
       <div className="w-full flex items-center justify-center flex-col gap-2">
         <div className="flex gap-7">
-            <Image src="/star-icon.png" alt="star" width={30} height={30}/>
+            <Image src="/star-icon.png" alt="star" width={30} height={30} className="w-auto h-auto"/>
         <h1
           className={`${merriweather.className} text-center font-bold text-2xl lg:text-4xl `}
         >
