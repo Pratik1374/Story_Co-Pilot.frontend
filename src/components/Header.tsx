@@ -67,7 +67,6 @@ const Header: FC<HeaderProps> = (props) => {
         }
       );
       if (response) {
-        console.log("response", response);
         const storyId = response.data.story_id;
         router.push(`/story/${storyId}`);
       } else {

@@ -13,8 +13,10 @@ import {
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   
   const handleScrollClick = (id: string) => {
     const element = document.getElementById(id);
@@ -49,7 +51,7 @@ export default function Home() {
           Elevate your writing with cutting-edge AI, rich editing, and stunning
           visuals.
         </h2>
-        <div className="mt-16 lg:mt-20 cursor-pointer group">
+        <div className="mt-16 lg:mt-20 cursor-pointer group" onClick={() => router.push('/register')}>
           <div className="get-started-rotating-border rounded-full font-serif font-bold text-xl group-hover:bg-gray-600">
             Get Started
           </div>
