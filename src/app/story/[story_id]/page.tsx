@@ -33,6 +33,7 @@ export default function StoryMainPage({
   const [isDesktopView, setIsDesktopView] = useState(true);
   const [historyLoader, setHistoryLoader] = useState(false);
   const [outputs, setOutputs] = useState<[PromptAndOutput] | []>([]);
+  const [storyName, setStoryName] = useState("");
 
   const editor = useEditor({
     extensions: [StarterKit, Underline],
@@ -75,6 +76,8 @@ export default function StoryMainPage({
             },
           }
         );
+        const story_name = response.data.story_name;
+        setStoryName(story_name);
         setIsValidating(false);
       } catch (error) {
         console.error("Error validating story");
@@ -134,7 +137,7 @@ export default function StoryMainPage({
 
         {/* editor section */}
         <div className="h-full w-screen lg:w-[65%] overflow-auto scrollbar-thin scrollbar-thumb-gray-500 pb-2 my-bg-gradient text-black">
-          <TiptapTextEditor content={content} editor={editor} />
+          <TiptapTextEditor content={content} editor={editor} story_name={storyName}/>
         </div>
 
         {/* AI Assistant section drawer in mobile view */}

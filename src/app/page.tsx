@@ -1,28 +1,21 @@
-"use client";
+"use client"
 
 import Header from "@/components/Header";
 import FeaturesSection from "@/components/landing-page/FeaturesSection";
 import Footer from "@/components/landing-page/Footer";
 import ImageGenerationSection from "@/components/landing-page/ImageGenerationInfoSection";
-import { useAuth } from "@/context/AuthContext";
 import {
   kreon,
-  lobster,
   merriweather,
   nunito,
   quintessential,
 } from "@/utils/fonts";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import React from "react";
+import { motion } from "framer-motion";
 
 export default function Home() {
-  const { login, user } = useAuth();
-
-  useEffect(() => {
-    console.log("user -> ", user);
-  }, [user]);
-
+  
   const handleScrollClick = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -35,15 +28,14 @@ export default function Home() {
       <Header />
 
       {/* intro section */}
-      {/* <div className="landing-main absolute top-[60px] left-0 right-0 m-auto flex pt-[100px] flex-col items-center h-[50vh] lg:h-[100vh] overflow-hidden">
+      <div className="landing-main absolute top-[60px] left-0 right-0 m-auto flex pt-[100px] flex-col items-center h-[50vh] lg:h-[100vh] overflow-hidden">
         <div className="">
           <div className="outer-circle w-[100vh] h-[100vh] lg:w-[100vw] lg:h-[100vw] flex items-center justify-center border border-gray-700">
             <div className="inner-circle z-10 w-[80%] h-[80%] flex items-center justify-center border border-gray-700">
-              <div className="inner-circle z-10 w-[80%] h-[80%] flex items-center justify-center border border-gray-700"></div>
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
 
       <div className="pt-[40px] lg:pt-[100px] h-[50vh] lg:h-[100vh] z-20 flex flex-col items-center justify-center">
         <h1
@@ -67,11 +59,16 @@ export default function Home() {
       {/* what section */}
       <div className="py-8 flex px-6 w-full lg:h-[430px] what-section">
         <div className="w-full lg:w-[70%] bg-transparent">
-          <h1
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+           
             className={`${merriweather.className} text-white font-bold text-2xl lg:text-4xl `}
           >
             What is Story-Co-Pilot?
-          </h1>
+          </motion.div>
+
           <h3
             className={`${nunito.className} mt-3 text-xl font-semibold text-gray-300`}
           >
@@ -107,7 +104,9 @@ export default function Home() {
             height={40}
             alt="write-icon"
           />
-          <p className={`${quintessential.className} lg:text-4xl mt-3 `}>Write</p>
+          <p className={`${quintessential.className} lg:text-4xl mt-3 `}>
+            Write
+          </p>
         </div>
         <div className="flex flex-col justify-center items-center">
           <Image
@@ -116,7 +115,9 @@ export default function Home() {
             height={40}
             alt="write-icon"
           />
-          <p className={`${quintessential.className} lg:text-4xl mt-3`}>Refine</p>
+          <p className={`${quintessential.className} lg:text-4xl mt-3`}>
+            Refine
+          </p>
         </div>
         <div className="flex flex-col justify-center items-center">
           <Image
@@ -131,7 +132,7 @@ export default function Home() {
         </div>
       </div>
 
-      <Footer/>
+      <Footer />
     </main>
   );
 }

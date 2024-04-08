@@ -59,7 +59,6 @@ const AI_AssistantSection: FC<AI_AssistantProps> = (props) => {
       }
 
       const token = await getLatestToken();
-      console.log(token);
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/v1/response/response-for-text`,
@@ -75,8 +74,6 @@ const AI_AssistantSection: FC<AI_AssistantProps> = (props) => {
           },
         }
       );
-
-      console.log(response);
 
       set_outputs(
         (prevOutputs: [PromptAndOutput] | []) =>

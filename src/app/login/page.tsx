@@ -21,14 +21,13 @@ const Login: NextPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("got");
 
     try {
       setLoggingIn(true);
       await login(email, password);
       router.push("/");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Invalid credentials", {
         style: {
           fontWeight: "bold",

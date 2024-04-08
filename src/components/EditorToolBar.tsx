@@ -24,9 +24,10 @@ import toast from "react-hot-toast";
 type Props = {
   editor: Editor | null;
   content: string;
+  story_name: string;
 };
 
-const EditorToolbar = ({ editor, content }: Props) => {
+const EditorToolbar = ({ editor, content, story_name }: Props) => {
   const { getLatestToken } = useAuth();
   const pathname = usePathname();
   const segments = pathname.split("/");
@@ -47,7 +48,6 @@ const EditorToolbar = ({ editor, content }: Props) => {
         );
 
         editor?.commands.setContent(response?.data?.editor_content);
-
       } catch (error) {
         console.error("Error getting previous content:", error);
       }
@@ -117,11 +117,14 @@ const EditorToolbar = ({ editor, content }: Props) => {
   return (
     <div
       className="rounded-tl-md rounded-tr-md flex flex-col justify-between items-center
-    gap-2 w-full flex-wrap border border-gray-700 bg-black"
+    w-full flex-wrap border border-gray-700 bg-black"
     >
-      <p className="text-center font-bold text-xl font-serif text-white pt-2">
-        Editor
-      </p>
+      <div className="relative w-full flex items-center justify-center">
+        <p className="text-center font-bold text-xl font-serif text-white pt-2">
+          Editor
+        </p>
+        <div className="absolute px-1 text-gray-300 left-0 bottom-0 max-w-[30%] truncate text-sm font-semibold border-t-1 border-r-1 border-gray-400 rounded-tr-md">{story_name}</div>
+      </div>
       <div className="flex w-full justify-between items-center border border-gray-700 p-1 gap-4">
         <div className="flex justify-start items-center gap-5 w-full lg:w-10/12 flex-wrap ">
           <button

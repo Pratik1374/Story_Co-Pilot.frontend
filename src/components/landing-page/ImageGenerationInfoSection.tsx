@@ -55,7 +55,7 @@ const ImageGenerationSection = () => {
         >
           Visualize Your Stories Instantly
         </h1>
-        <Image src="/star-icon.png" alt="star" width={30} height={30}/>
+        <Image src="/star-icon.png" alt="star" width={30} height={30} className="w-auto h-auto"/>
         </div>
         <h3 className={`${nunito.className} text-center mt-3 font-semibold text-gray-300 lg:max-w-[80vw]`}>
         Enhance reader engagement with captivating illustrations generated dynamically, featuring unique characters, immersive backgrounds, and everything in between! 

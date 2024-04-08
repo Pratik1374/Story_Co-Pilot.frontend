@@ -48,7 +48,6 @@ export default function AllStories({
   useEffect(() => {
     const getAllStories = async () => {
       try {
-        console.log("getAllStories called");
         setHistoryLoader(true);
         const token = await getLatestToken();
         const response = await axios.get(
@@ -61,7 +60,6 @@ export default function AllStories({
         );
 
         setAllStories(response.data.all_stories);
-        console.log(response.data.all_stories);
         setHistoryLoader(false);
       } catch (error) {
         console.error("Error getting previous responses");

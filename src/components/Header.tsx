@@ -19,6 +19,7 @@ import UserDropdown from "./UserDropdown";
 import { lobster, acme } from "../utils/fonts";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import DotLoader from "./DotLoader";
 
 interface HeaderProps {
   set_is_assistant_drawer_open?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -51,6 +52,7 @@ const Header: FC<HeaderProps> = (props) => {
       });
       return;
     }
+    setCreatingNewStory(true);
     const token = await getLatestToken();
     try {
       const response = await axios.post(
@@ -64,7 +66,6 @@ const Header: FC<HeaderProps> = (props) => {
           },
         }
       );
-
       if (response) {
         console.log("response", response);
         const storyId = response.data.story_id;
@@ -74,6 +75,16 @@ const Header: FC<HeaderProps> = (props) => {
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error("Something went wrong", {
+        style: {
+          fontWeight: "bold",
+          border: "3px solid red",
+          borderRadius: "50px",
+          backgroundColor: "white",
+        },
+      });
+    } finally {
+      setCreatingNewStory(false);
     }
   };
 
@@ -211,6 +222,18 @@ const Header: FC<HeaderProps> = (props) => {
         </div>
       </div>
 
+      {/* when save is clicked */}
+      <div
+        className={
+          creatingNewStory
+            ? "absolute left-0 top-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center z-50 bg-transparent text-cyan-300 backdrop-blur-sm"
+            : "hidden"
+        }
+      >
+        <DotLoader />
+        <p className="text-black">Saving...</p>
+      </div>
+
       {/* new story modal */}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
@@ -240,7 +263,7 @@ const Header: FC<HeaderProps> = (props) => {
                 <Button
                   color="primary"
                   onPress={() => {
-                    onClose;
+                    onClose();
                     handleSave();
                   }}
                 >

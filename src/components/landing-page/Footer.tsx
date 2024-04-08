@@ -15,24 +15,27 @@ const Footer = () => {
         </Link>
         <Link
           href="https://www.linkedin.com/in/pratik-jadhav-7a969920b"
+          target="_blank"
           className="p-2 bg-gray-700 rounded-lg hover:bg-purple-500 cursor-pointer"
         >
           <Linkedin />
         </Link>
         <Link
           href="mailto:pratik1374@gmail.com"
+          target="_blank"
           className="p-2 bg-gray-700 rounded-lg hover:bg-purple-500 cursor-pointer"
         >
           <Mail />
         </Link>
         <Link
           href="https://pratik-portfolio-temp.netlify.app/"
+          target="_blank"
           className="p-2 bg-gray-700 rounded-lg hover:bg-purple-500 cursor-pointer"
         >
           <Globe />
         </Link>
       </div>
-      <p className="text-center text-gray-400">Copyright &copy; Story_Co-Pilot</p>
+      <p className="text-center text-gray-400 items-center">Copyright &copy; Story_Co-Pilot</p>
     </div>
   );
 };

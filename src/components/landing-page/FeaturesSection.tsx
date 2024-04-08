@@ -11,7 +11,7 @@ const FeaturesSection = () => {
         Our Features
       </h1>
       <div className="py-12 px-6 flex w-full items-center justify-center lg:justify-between flex-wrap gap-4 mt-3">
-        <div className="flex flex-col w-[90%] lg:w-[30%] h-[400px] p-2 feature-card gap-2 items-center justify-center rounded-md border border-gray-400">
+        <div className="flex flex-col w-[90%] lg:w-[30%] h-[400px] p-2 feature-card gap-2 items-center justify-center rounded-md">
           <Image src="/ai-icon.png" alt="ai-icon" width={70} height={70} />
           <h2 className={`${merriweather.className} text-xl mt-5`}>
             AI Assistant
@@ -22,7 +22,7 @@ const FeaturesSection = () => {
             writing process.
           </p>
         </div>
-        <div className="flex flex-col w-[90%] lg:w-[30%] h-[400px] p-2 feature-card gap-2 items-center justify-center rounded-md border border-gray-400">
+        <div className="flex flex-col w-[90%] lg:w-[30%] h-[400px] p-2 feature-card gap-2 items-center justify-center rounded-md ">
           <Image src="/editor-icon.png" alt="ai-icon" width={70} height={70} />
           <h2 className={`${merriweather.className} text-xl mt-5`}>
             Rich Text Editor
@@ -33,7 +33,7 @@ const FeaturesSection = () => {
             final draft.
           </p>
         </div>
-        <div className="flex flex-col w-[90%] lg:w-[30%] h-[400px] p-2 feature-card gap-2 items-center justify-center rounded-md border border-gray-400">
+        <div className="flex flex-col w-[90%] lg:w-[30%] h-[400px] p-2 feature-card gap-2 items-center justify-center rounded-md ">
           <Image
             src="/img-generation-icon.png"
             alt="ai-icon"

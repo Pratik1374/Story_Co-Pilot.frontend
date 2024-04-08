@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { AuthProvider } from "@/context/AuthContext";
 import { NextUIProvider } from "@nextui-org/react";
