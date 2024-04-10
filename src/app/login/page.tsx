@@ -5,8 +5,6 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
-import { GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
-import { getAuth } from "@firebase/auth";
 import { lobster } from "@/utils/fonts";
 import Image from "next/image";
 import toast from "react-hot-toast";
@@ -15,7 +13,7 @@ import DotLoader from "@/components/DotLoader";
 const Login: NextPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { login, user } = useAuth();
+  const { login, user, loginWithGoogle } = useAuth();
   const router = useRouter();
   const [loggingIn, setLoggingIn] = useState(false);
 
@@ -25,7 +23,7 @@ const Login: NextPage = () => {
     try {
       setLoggingIn(true);
       await login(email, password);
-      router.push("/");
+      router.push(`/all_stories/${user?.uid}`);
     } catch (error) {
       console.error(error);
       toast.error("Invalid credentials", {
@@ -43,9 +41,8 @@ const Login: NextPage = () => {
 
   const handleGoogleSignIn = async () => {
     try {
-      const googleProvider = new GoogleAuthProvider();
-      await signInWithPopup(getAuth(), googleProvider);
-      await router.push("/");
+      const userCredential = await loginWithGoogle();
+      router.push(`/all_stories/${userCredential?.user?.uid}`);
     } catch (error: any) {
       console.error("Google sign-in error:", error);
       toast.error("Something went wrong", {
@@ -61,7 +58,7 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     if (user) {
-      router.push("/");
+      router.push(`/all_stories/${user?.uid}`);
     }
   }, [user, router]);
 

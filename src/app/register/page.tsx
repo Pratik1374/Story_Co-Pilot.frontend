@@ -22,7 +22,7 @@ const Register: NextPage = () => {
   const [loggingIn, setLoggingIn] = useState(false);
 
   // Auth context and router
-  const { register, user } = useAuth();
+  const { register, user, registerWithGoogle } = useAuth();
   const router = useRouter();
 
   //add new user to database
@@ -49,12 +49,21 @@ const Register: NextPage = () => {
 
     try {
       const userCredential = await register(email, password);
-      const uid = userCredential.user?.uid || "";
-      if (uid === "") {
-        alert("Failed to register");
+      if(!userCredential || !userCredential.user) {
+        toast.error("Email is already registered.Please Log In", {
+          style: {
+            display: "flex",
+            fontWeight: "bold",
+            border: "3px solid red",
+            borderRadius: "50px",
+            backgroundColor: "white",
+          },
+        });
+        return;
       }
+      const uid = userCredential?.user?.uid || "";
       await addNewUser(email, name, uid);
-      await router.push("/");
+      router.push(`/all_stories/${userCredential?.user?.uid}`);
     } catch (error: any) {
       if (error.code === "auth/email-already-in-use") {
         setError("Email is already registered.Please Log In");
@@ -82,18 +91,26 @@ const Register: NextPage = () => {
     setError(null);
 
     try {
-      const googleProvider = new GoogleAuthProvider();
-      const result = await signInWithPopup(getAuth(), googleProvider);
-      const googleUser = result.user;
-      const googleName = googleUser.displayName || "";
-      const googleEmail = googleUser.email || "";
-      setName(googleName);
-      const uid = googleUser?.uid || "";
-      if (uid === "") {
-        alert("Failed to register");
+      const userCredential = await registerWithGoogle();
+      if (!userCredential || !userCredential.user) {
+        toast.error("Something went wrong", {
+          style: {
+            fontWeight: "bold",
+            border: "3px solid red",
+            borderRadius: "50px",
+            backgroundColor: "white",
+          },
+        });
+        return;
       }
-      await addNewUser(googleEmail, googleName, uid);
-      await router.push("/");
+      setName(userCredential?.user?.displayName || "");
+      
+      await addNewUser(
+        userCredential?.user?.email || "",
+        userCredential?.user?.displayName || "",
+        userCredential?.user?.uid
+      );
+      router.push(`/all_stories/${userCredential?.user?.uid}`);
     } catch (error: any) {
       setError("An error occurred during Google sign-in. Please try again.");
       if (error.code === "auth/email-already-in-use") {
@@ -109,6 +126,14 @@ const Register: NextPage = () => {
       } else {
         setError("An error occurred during registration. Please try again.");
         console.error(error);
+        toast.error("Something went wrong", {
+          style: {
+            fontWeight: "bold",
+            border: "3px solid red",
+            borderRadius: "50px",
+            backgroundColor: "white",
+          },
+        });
       }
     } finally {
       setLoggingIn(false);
@@ -118,7 +143,7 @@ const Register: NextPage = () => {
   // Redirect to the home page if the user is already authenticated
   useEffect(() => {
     if (user) {
-      router.push("/");
+      router.push(`/all_stories/${user?.uid}`);
     }
   }, [user, router]);
 
