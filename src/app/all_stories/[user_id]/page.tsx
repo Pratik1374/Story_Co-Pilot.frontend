@@ -39,7 +39,6 @@ export default function AllStories({
         }
       );
 
-      console.log(response.data.all_stories)
       setAllStories(response.data.all_stories);
       setHistoryLoader(false);
     } catch (error) {
@@ -50,7 +49,6 @@ export default function AllStories({
   };
 
   useEffect(() => {
-    console.log("user v : ", user);
     const validateUserId = async () => {
       setIsValidating(true);
       try {
