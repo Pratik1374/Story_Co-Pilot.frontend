@@ -35,6 +35,28 @@ export default function StoryMainPage({
   const [outputs, setOutputs] = useState<[PromptAndOutput] | []>([]);
   const [storyName, setStoryName] = useState("");
 
+  const getPreviousAIConversation = async () => {
+    try {
+      setHistoryLoader(true);
+      const token = await getLatestToken();
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/story/get-ai-conversations/${story_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setOutputs(response.data.conversations);
+      // setHistoryLoader(false);
+    } catch (error) {
+      console.error("Error getting previous responses");
+    } finally {
+      setHistoryLoader(false);
+    }
+  };
+
   const editor = useEditor({
     extensions: [StarterKit, Underline],
     editorProps: {
@@ -78,6 +100,7 @@ export default function StoryMainPage({
         );
         const story_name = response.data.story_name;
         setStoryName(story_name);
+        getPreviousAIConversation();
         setIsValidating(false);
       } catch (error) {
         console.error("Error validating story");
@@ -88,32 +111,6 @@ export default function StoryMainPage({
     };
 
     validateStoryId();
-  }, [params.story_id]);
-
-  useEffect(() => {
-    setHistoryLoader(true);
-    const getPreviousAIConversation = async () => {
-      try {
-        const token = await getLatestToken();
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/story/get-ai-conversations/${story_id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        setOutputs(response.data.conversations);
-        // setHistoryLoader(false);
-      } catch (error) {
-        console.error("Error getting previous responses");
-      } finally {
-        setHistoryLoader(false);
-      }
-    };
-
-    getPreviousAIConversation();
   }, [params.story_id]);
 
   if (isValidating) {
@@ -131,6 +128,7 @@ export default function StoryMainPage({
               history_loader={historyLoader}
               outputs={outputs}
               set_outputs={setOutputs}
+              editor={editor}
             />
           </div>
         )}
@@ -149,6 +147,7 @@ export default function StoryMainPage({
             history_loader={historyLoader}
             outputs={outputs}
             set_outputs={setOutputs}
+            editor={editor}
           />
         </AI_AssistantDrawer>
       </div>

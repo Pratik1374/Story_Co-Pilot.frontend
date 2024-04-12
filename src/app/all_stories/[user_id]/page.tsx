@@ -70,10 +70,6 @@ export default function AllStories({
     validateUserId();
   }, []);
 
-  useEffect(() => {
-    
-  }, [user_id]);
-
   function handleStoryClick(story_id: string): void {
     router.push(`/story/${story_id}`);
   }

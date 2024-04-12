@@ -12,6 +12,7 @@ import axios, { AxiosResponse } from "axios";
 import { useAuth } from "@/context/AuthContext";
 import { usePathname } from "next/navigation";
 import DotLoader from "./DotLoader";
+import { Editor } from "@tiptap/react";
 
 interface PromptAndOutput {
   id: string;
@@ -23,10 +24,11 @@ interface AI_AssistantProps {
   history_loader: boolean;
   outputs: [PromptAndOutput] | [];
   set_outputs: React.Dispatch<React.SetStateAction<[PromptAndOutput] | []>>;
+  editor: Editor | null;
 }
 
 const AI_AssistantSection: FC<AI_AssistantProps> = (props) => {
-  const { history_loader, outputs, set_outputs } = props;
+  const { history_loader, outputs, set_outputs, editor } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedLengthTab, setSelectedLengthTab] = useState<string>("Medium");
@@ -237,10 +239,21 @@ const AI_AssistantSection: FC<AI_AssistantProps> = (props) => {
               <div className="flex p-1">{output.answer}</div>
             </div>
             <div className="flex w-full gap-2 justify-end  mt-3">
-              <button className="bg-purple-400 p-1 hover:bg-purple-500 rounded-lg text-sm font-mono text-black">
+              <button className="bg-purple-400 p-1 hover:bg-purple-500 rounded-lg text-sm font-mono text-black" onClick={() => {
+                const selection = editor?.view.state.selection;
+                editor?.chain().focus().insertContentAt({
+                    from: selection?.from || 0,
+                    to: selection?.to || 0
+                }, output.answer).run();
+              }}>
                 Replace selected text
               </button>
-              <button className="bg-purple-400 p-1 hover:bg-purple-500 rounded-lg text-sm font-mono text-black">
+              <button
+                className="bg-purple-400 p-1 hover:bg-purple-500 rounded-lg text-sm font-mono text-black"
+                onClick={() => {
+                  editor?.commands.setContent(output.answer);
+                }}
+              >
                 Move to editor
               </button>
             </div>
