@@ -238,7 +238,7 @@ const Register: NextPage = () => {
                 </div>
               </form>
               <button
-                className="mt-3 w-full flex rounded-full items-center border border-sky-300  pl-2 p-2 gap-1  hover:border-0 hover:shadow-sm hover:shadow-sky-300"
+                className="mt-3 w-full flex rounded-full items-center justify-center border border-sky-300  pl-2 p-2 gap-2  hover:border-0 hover:shadow-sm hover:shadow-sky-300"
                 onClick={handleGoogleSignIn}
               >
                 <Image
