@@ -20,6 +20,7 @@ import { lobster, acme } from "../utils/fonts";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import DotLoader from "./DotLoader";
+import Spinner from "./Spinner";
 
 interface HeaderProps {
   set_is_assistant_drawer_open?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,9 +31,10 @@ const Header: FC<HeaderProps> = (props) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const router = useRouter();
   const [storyName, setStoryName] = useState("");
-  const { user, getLatestToken, logout } = useAuth();
+  const { user, getLatestToken, logout, login } = useAuth();
   const [creatingNewStory, setCreatingNewStory] = useState(false);
   const [onStoryMainPage, setOnStoryMainPage] = useState(false);
+  const [loggingIn, setLoggingIn] = useState(false);
 
   useEffect(() => {
     if (set_is_assistant_drawer_open !== undefined) {
@@ -87,6 +89,18 @@ const Header: FC<HeaderProps> = (props) => {
     }
   };
 
+  const handleGuestLogin = async () => {
+    try {
+      setLoggingIn(true);
+      const loginRes = await login("guest@mail.com", "123456");
+      router.push(`/all_stories/${loginRes?.user?.uid}`);
+    } catch (error) {
+      toast.error("Something went wrong.");
+    } finally {
+      setLoggingIn(false);
+    }
+  };
+
   return (
     <header className="top-0 absolute bg-gray-950 text-white border-b border-gray-700 h-[60px] flex items-center w-full px-4 z-40">
       <div className="w-full flex items-center justify-between">
@@ -129,6 +143,16 @@ const Header: FC<HeaderProps> = (props) => {
                   </span>
                   <span className="backdrop" />
                   <span className="text">Login</span>
+                </button>
+                <button
+                  className="shooting-star-border"
+                  onClick={handleGuestLogin}
+                >
+                  <span className="spark__container">
+                    <span className="spark" />
+                  </span>
+                  <span className="backdrop" />
+                  <span className="text">Guest Access</span>
                 </button>
               </>
             )}
@@ -215,6 +239,16 @@ const Header: FC<HeaderProps> = (props) => {
                   <span className="backdrop" />
                   <span className="text">Login</span>
                 </button>
+                <button
+                  className="shooting-star-border"
+                  onClick={handleGuestLogin}
+                >
+                  <span className="spark__container">
+                    <span className="spark" />
+                  </span>
+                  <span className="backdrop" />
+                  <span className="text">Guest Access</span>
+                </button>
               </>
             )}
           </div>
@@ -273,6 +307,13 @@ const Header: FC<HeaderProps> = (props) => {
           )}
         </ModalContent>
       </Modal>
+
+      {/* Loader container for guest login */}
+      {loggingIn && (
+        <div className="fixed z-50 top-0 left-0 w-screen h-screen flex items-center justify-center backdrop-blur-sm">
+          <Spinner />
+        </div>
+      )}
     </header>
   );
 };

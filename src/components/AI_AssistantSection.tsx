@@ -76,7 +76,6 @@ const AI_AssistantSection: FC<AI_AssistantProps> = (props) => {
           },
         }
       );
-
       set_outputs(
         (prevOutputs: [PromptAndOutput] | []) =>
           [
@@ -239,19 +238,38 @@ const AI_AssistantSection: FC<AI_AssistantProps> = (props) => {
               <div className="flex p-1">{output.answer}</div>
             </div>
             <div className="flex w-full gap-2 justify-end  mt-3">
-              <button className="bg-purple-400 p-1 hover:bg-purple-500 rounded-lg text-sm font-mono text-black" onClick={() => {
-                const selection = editor?.view.state.selection;
-                editor?.chain().focus().insertContentAt({
-                    from: selection?.from || 0,
-                    to: selection?.to || 0
-                }, output.answer).run();
-              }}>
+              <button
+                className="bg-purple-400 p-1 hover:bg-purple-500 rounded-lg text-sm font-mono text-black"
+                onClick={() => {
+                  const selection = editor?.view.state.selection;
+                  editor
+                    ?.chain()
+                    .focus()
+                    .insertContentAt(
+                      {
+                        from: selection?.from || 0,
+                        to: selection?.to || 0,
+                      },
+                      output.answer
+                    )
+                    .run();
+                }}
+              >
                 Replace selected text
               </button>
               <button
                 className="bg-purple-400 p-1 hover:bg-purple-500 rounded-lg text-sm font-mono text-black"
                 onClick={() => {
-                  editor?.commands.setContent(output.answer);
+                  // editor?.commands.setContent(output.answer);
+                  const paragraphs = output.answer.split("\n");
+                  editor?.commands.focus();
+                  paragraphs.forEach((paragraph) => {
+                    editor?.chain().insertContent(paragraph).run();
+                    // Add a paragraph break after each paragraph
+                    if (paragraph !== paragraphs[paragraphs.length - 1]) {
+                      editor?.commands.setParagraph();
+                    }
+                  });
                 }}
               >
                 Move to editor

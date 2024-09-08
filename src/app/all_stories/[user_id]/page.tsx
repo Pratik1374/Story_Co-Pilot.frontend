@@ -82,6 +82,7 @@ export default function AllStories({
           <h1 className="pt-[60px] font-bold text-2xl text-center p-3 mt-2">
             All Stories
           </h1>
+          <p className="text-center m-2 text-sm">Select a previous story below or embark on a new adventure!</p>
           {historyLoader && (
             <div className="flex w-screen h-[50vh] justify-center items-center">
               <Spinner color="secondary" label="Getting all stories..." />
